@@ -4,14 +4,12 @@
   "description": "Salesforce Marketing Cloud Quickstart",
   "main": "dist/server.js",
   "scripts": {
-    "start": "npm run serve",
-    "build": "npm run build-ts && npm run copy-static-assets",
-    "serve": "node dist/server.js",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "debug": "npm run build",
+    "start": "node dist/server.js",
+    "build": "tsc && npm run copy-static-assets",
+    "postinstall": "npm run build",
     "copy-static-assets": "node copyStaticAssets.js"
   },
+
   "engines": {
     "node": "^9.3.0",
     "npm": "^5.6.0"

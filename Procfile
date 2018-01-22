@@ -1,1 +1,3 @@
-web: node dist/server.js
+web: npm start
+build: npm run-script build
+
