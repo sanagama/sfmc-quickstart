@@ -1,0 +1,8 @@
+{
+  "name": "Salesforce Marketing Cloud Quick Start",
+  "description": "Learn Salesforce Marketing Cloud APIs and SDKs.",
+  "repository": "https://github.com/sanagama/sfmc-quickstart",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["Salesforce", "Marketing Cloud"],
+  "image": "heroku/nodejs"
+}
