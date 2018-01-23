@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc && npm run copy-static-assets",
-    "postinstall": "npm run build",
+    "postinstall": "npm run-script build",
     "copy-static-assets": "node copyStaticAssets.js"
   },
 
