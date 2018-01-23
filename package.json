@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
-    "build": "tsc -v && tsc && npm run copy-static-assets",
+    "build": "tsc && npm run copy-static-assets",
     "postinstall": "npm run-script build",
     "copy-static-assets": "node copyStaticAssets.js"
   },
