@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import * as logger from "morgan";
 import * as dotenv from "dotenv";
 import * as path from "path";
+import * as favicon from "serve-favicon";
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
@@ -28,6 +29,8 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "static")));
+
+app.use(favicon(path.join(__dirname,'static','images','favicons', 'favicon.ico')));
 
 /**
  * Primary app routes.

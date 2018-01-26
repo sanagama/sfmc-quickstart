@@ -8,15 +8,41 @@
 
   <% include ./partials/nav.ejs %>
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="images/lang-logo.png">
-    </a>
-    <h1>A lap around Salesforce Marketing Cloud REST APIs</h1>
-    <p>blah, blah</p>
-  </div>
-</div>
+    <div class="container-fluid">
+      <h1 class="text-primary" align="center">Build an app for Salesforce Marketing Cloud</h1>
+      <p>
+      <h3 align="center">Get started with Marketing Cloud APIs and SDKs</h3>
+      <p>
+      
+      <div class="jumbotron text-center">
+        <p class="lead" align="center">How do you want to build your app?</p>
+
+        <div class="btn-group btn-group-lg" role="group">
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="sfmc-apis" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Marketing Cloud APIs
+              </button>
+              <div class="dropdown-menu" aria-labelledby="sfmc-apis">
+                  <a class="dropdown-item" href="#">REST APIs</a>
+                  <a class="dropdown-item" href="#">SOAP APIs</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group btn-group-lg" role="group">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="sfmc-sdks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Marketing Cloud SDKs
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sfmc-sdks">
+                    <a class="dropdown-item" href="#">Java SDK</a>
+                    <a class="dropdown-item" href="#">PHP SDK</a>
+                    <a class="dropdown-item" href="#">C# SDK</a>
+                      </div>
+              </div>
+          </div>
+      </div>
+    </div>
 
 </body>
 </html>
