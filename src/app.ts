@@ -6,10 +6,10 @@ import * as dotenv from "dotenv";
 import * as path from "path";
 import * as favicon from "serve-favicon";
 
-// Controllers (route handlers)
-import * as homeController from "./controllers/home";
-import * as apiController from "./controllers/api";
-import * as sdkController from "./controllers/sdk";
+// Routes
+import * as homeRoute from "./routes/home";
+import * as apiRoute from "./routes/api";
+import * as sdkRoute from "./routes/sdk";
 
 const PORT = process.env.PORT || 5000
 
@@ -32,11 +32,11 @@ app.use(express.static(path.join(__dirname, "static")));
 
 app.use(favicon(path.join(__dirname,'static','images','favicons', 'favicon.ico')));
 
-/**
- * Primary app routes.
- */
-app.get("/", homeController.index);
-app.get("/api", apiController.index);
-app.get("/sdk", sdkController.index);
+// Primary app routes.
+app.get("/", homeRoute.index);
+app.get("/api/rest", apiRoute.restPage1);
+app.get("/api/rest2", apiRoute.restPage2);
+app.get("/sdk/java", sdkRoute.javaPage1);
+app.get("/sdk/java2", sdkRoute.javaPage2);
 
 module.exports = app;

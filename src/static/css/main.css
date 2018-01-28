@@ -1,17 +1,25 @@
+h2 {
+  color: #532F8C; }
+
 .jumbotron {
   background: #532F8C;
   color: white;
-  padding-bottom: 100px; }
-
-.jumbotron .btn-primary {
-  background: #845ac7;
-  border-color: #845ac7; }
-
-.jumbotron .btn-primary:hover {
-      background: #7646c1; }
+  margin-top: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;}
 
 .jumbotron p {
-    color: #d9ccee; }
+    color: #d9ccee;}
 
 .dropdown-item:hover {
-  background-color: rgb(119, 120, 180);}
+  background-color: rgb(150, 150, 245);}
+
+a.disabled {
+  cursor: not-allowed;}
+
+a.disabled:hover {
+    cursor: not-allowed;}
+
+.step-button {
+  min-width: 190px !important;
+  max-width: 200px !important;}
