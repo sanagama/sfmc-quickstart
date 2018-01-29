@@ -6,49 +6,90 @@
 
 <body>
 
+<% include ../partials/body-scripts.ejs %>
 <% include ../partials/brand.ejs %>
-
 <% include ../partials/nav-languages.ejs %>
 
 <div class="container text-center">
-  <h2 class="mt-4"><small>Create a simple app for Salesforce Marketing Cloud using Java</small></h2>
-
+  <h2 class="mt-4"><small>Create a simple app for Salesforce Marketing Cloud using Java on macOS</small></h2>
   <% include ../partials/nav-steps.ejs %>
-
-  <p class="mt-4">This section walks you through installing the necessary dependencies to create Java apps with Salesforce Marketing Cloud.</p>
+  <p class="mt-3">In this section, you will install the necessary tools, runtimes and SDKs to create Java apps on your Mac.</p>
 </div>
 
 <!-- Turorial steps -->
 <div class="container">
 
-      <!-- Step 1 -->
-      <div class="card mt-2">
-      <div class="card-block">
-        <div class="card-header"><strong>Step 1.1 Install Homebrew and Java</strong></div>
-        <div class="card-body">
-          <h6 class="card-subtitle">Skip this step if you already have Brew and Java installed on your machine.</h6>
-          <p>
-          <p class="card-text">Install Homebrew, cask, and Java using the following commands. Once you have installed Homebrew, make sure to restart the terminal session.</p>
+  <!-- Step 1 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.1: Install Homebrew and Java</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-3">Skip this step if you already have Brew and Java installed on your Mac.</h6>
+        <p class="card-text">Run the command below in a Terminal window to install Homebrew.</p>
 
-          <pre><code>Sample text here.... And another line of sample text here...</code></pre>
-          <samp>test sample output</samp>
-        </div>
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+          </code>
+        </pre>
+
+        <p class="card-text">Close the Terminal window you opened earlier and open a new one. Run the command below in the Terminal window to install the latest Java Runtime and the Java SDK.</p>
+
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            brew update
+            brew cask install java
+          </code>
+        </pre>
+
+        <p class="card-text">Run the command below in the Terminal window to verify that the Java Runtime and SDK are installed properly.</p>
+
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            javac --version
+          </code>
+        </pre>
+                
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully installed Homebrew and Java on your Mac!</p>
       </div>
     </div>
+  </div>
 
-      <!-- Step 2 -->
-      <div class="card mt-2">
-          <div class="card-block">
-              <div class="card-header">Step 1.2 Install Maven</div>
-        <div class="card-body">
-          <h6 class="card-subtitle">Skip this step if you already have Maven installed on your machine.</h6>
-          <p>
-          <p class="card-text"><a href="https://maven.apache.org">Maven</a> can be used to help manage dependencies, build, test and run your Java project.</p>
-        </div>
+  <!-- Step 2 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.2: Install Maven</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-3">Skip this step if you already have Maven installed on your Mac.</h6>
+        <p class="card-text">We'll use <a href="https://maven.apache.org">Maven</a> to help manage dependencies, build, test and run Java projects. Run the command below in a Terminal window to install Maven.</p>
+
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            brew install maven
+          </code>
+        </pre>
+
+        <p class="card-text">Run the command below in the Terminal window to verify that the Maven is installed properly.</p>
+
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            mvn -v
+          </code>
+        </pre>
+        
+          <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have successfully installed Java and Maven on your Mac. 
+            You now have everything you need to create an app for Salesforce Marketing Cloud using Java on macOS!</p>
       </div>
     </div>
+  </div>
 
 </div>
+
+<div class="container text-center">
+  <a class="btn btn-primary btn-md m-4 active" href="/sdk/java2">Go to step 2</a>
+</div>
+        
+<% include ../partials/footer.ejs %>
 
 </body>
 </html>

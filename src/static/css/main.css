@@ -20,6 +20,7 @@ a.disabled {
 a.disabled:hover {
     cursor: not-allowed;}
 
-.step-button {
-  min-width: 190px !important;
-  max-width: 200px !important;}
+.button-fixed-width-250 {
+  min-width: 230px !important;
+  max-width: 250px !important;
+  text-align:left;}
