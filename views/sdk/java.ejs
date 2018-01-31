@@ -11,40 +11,42 @@
 <!-- Turorial steps -->
 <div class="container">
 
-  <p class="mt-3">In this section, you will install the necessary tools, runtimes and SDKs to create <a href="https://java.com" target="_blank">Java</a> apps on your Mac.</p>
+  <p class="mt-3">In this section, you will install the Java 8 SDK and Apache Maven to create <a href="https://java.com" target="_blank">Java</a> apps on your Mac.</p>
+
+  <p class="mt-3"><mark>You must use Java 8 (or older) SDK and runtime. The <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> currently does not support the Java 9 SDK and runtime.</mark></p>
   
   <!-- Step 1 -->
   <div class="card mt-3">
     <div class="card-block">
-      <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.1: Install Homebrew and Java</div>
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.1: Install Homebrew and Java 8</div>
       <div class="card-body">
-        <h6 class="card-subtitle mb-3">Skip this step if you already have Brew and Java installed on your Mac.</h6>
-        <p class="card-text">Run the command below in a Terminal window to install <a href="https://brew.sh" target="_blank">Homebrew.</a></p>
+        <h6 class="card-subtitle mb-3">Skip this step if you already have Brew and Java 8 SDK installed on your Mac.</h6>
 
+        <p class="card-text">Run the command below in a Terminal window to install <a href="https://brew.sh" target="_blank">Homebrew.</a></p>
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           </code>
         </pre>
 
-        <p class="card-text">Close the Terminal window you opened earlier and open a new one. Run the command below in the Terminal window to install the latest Java Runtime and the Java SDK.</p>
-
+        <p class="card-text">Close the Terminal window you opened earlier and open a new one. Run the command below in the new Terminal window to install the Java 8 Runtime and SDK.</p>
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
             brew update
-            brew cask install java
+            brew tap caskroom/versions
+            brew cask install java8
           </code>
         </pre>
 
-        <p class="card-text">Run the command below in the Terminal window to verify that the Java Runtime and SDK are installed properly.</p>
+        <p class="card-text">Run the command below in the Terminal window to verify that the Java 8 SDK is installed properly. The output should be similar to <code>java version "1.8.0_162"</code></p>
 
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
-            javac --version
+            javac -version
           </code>
         </pre>
-                
-        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully installed Homebrew and Java on your Mac!</p>
+
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully installed Homebrew and the Java 8 SDK on your Mac!</p>
       </div>
     </div>
   </div>
@@ -71,9 +73,8 @@
           </code>
         </pre>
         
-          <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have successfully installed Java and Maven.</p>
-
-          <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You have everything you need to create Java apps on your Mac!</p>
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have successfully installed Java 8 SDK and Maven.</p>
+        <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You have everything you need to create Java apps on your Mac!</p>
       </div>
     </div>
   </div>

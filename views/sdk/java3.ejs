@@ -12,7 +12,7 @@
 <div class="container">
 
   <p class="mt-3">In this section you will create <strong>two</strong> Java apps that use the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a>.</p>
-  <p class="mt-3">The first app will test if you can connect to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>. The second app will connect to your Marketing Cloud account and =create a new contact, send a test e-mail to the contact and check status of the e-mail.</p>
+  <p class="mt-3">The first app tests the connection to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>. The second app connects to your Marketing Cloud account, creates a new contact, sends a test e-mail to the contact and checks status of the e-mail.</p>
   
   <!-- Step 1 -->
   <div class="card mt-3">
@@ -31,7 +31,7 @@
     <div class="card-block">
       <div class="card-header text-white" style="background-color: #00AA9E;">Step 3.2: The first Java app</div>
       <div class="card-body">
-        <h6 class="card-subtitle mb-3">This Java app tests if you can connect to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>.</h6>
+        <h6 class="card-subtitle mb-3">This Java app tests the connection to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>.</h6>
 
         <p class="card-text">You should have a file called <code>App.java</code> in your Maven project located at <code>~/sfmc-java-sample/src/main/java/com/sfmcsamples/App.java</code>. 
         Open this file in your favorite text editor and replace the contents with the code below. Save and close the file.</p>
@@ -40,37 +40,53 @@
         
         <pre>
           <code class="language-java">
-              package com.sfmcsamples;
-
-              /**
-               * Hello world!
-               *
-               */
-              public class App 
-              {
-                  public static void main( String[] args )
-                  {
-                      System.out.println( "Hello World!" );
-                  }
-              }
+            package com.sfmcsamples;
+            import com.exacttarget.fuelsdk.ETClient;
+            import com.exacttarget.fuelsdk.ETConfiguration;
+            import com.exacttarget.fuelsdk.ETSdkException;
+            
+            public class App 
+            {
+                public static void main( String[] args )
+                {
+                    // TODO: Replace clientId and clientSecret with yours
+                    String clientId = "-- replace me --";
+                    String clientSecret = "-- replace me --";
+            
+                    ETConfiguration configuration = new ETConfiguration();
+                    configuration.set("clientId", clientId);
+                    configuration.set("clientSecret", clientSecret);
+                    
+                    try
+                    {
+                        ETClient client = new ETClient(configuration);
+                        System.out.println("\n** Successfully connected to Marketing Cloud!");
+                        System.out.format("accessToken = %s\n\n", client.getAccessToken());
+                    }
+                    catch(ETSdkException e)
+                    {
+                        System.out.println("** Error: " + e.toString());
+                    }
+                }
+            }
           </code>
         </pre>
 
-        <p class="card-text">Run the command below in a Terminal window to Build the project and create a jar package.></p>
+        <p class="card-text">Run the command below in a Terminal window to Build the project and create a jar package.</p>
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
-              mvn package
+            mvn clean package
           </code>
         </pre>
 
-        <p class="card-text">Run the command below in a Terminal window to run your Java application. Omit the <code>-q</code> in the command below to see info messages from Maven.</p>
+        <p class="card-text">Run the command below in a Terminal window to run your Java application.</p>
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
-              mvn -q exec:java "-Dexec.mainClass=com.sfmcsamples.App"
+            mvn exec:java "-Dexec.mainClass=com.sfmcsamples.App"
           </code>
         </pre>
   
-        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created your first Java app that uses Marketing Cloud!</p>
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created your first Java app that connects to Marketing Cloud!</p>
       </div>
     </div>
   </div>
@@ -88,20 +104,49 @@
           
           <pre>
             <code class="language-java">
+              package com.sfmcsamples;
+              import com.exacttarget.fuelsdk.ETClient;
+              import com.exacttarget.fuelsdk.ETConfiguration;
+              import com.exacttarget.fuelsdk.ETSdkException;
+              
+              public class App 
+              {
+                  public static void main( String[] args )
+                  {
+                      // TODO: Replace clientId and clientSecret with yours
+                      String clientId = "-- replace me --";
+                      String clientSecret = "-- replace me --";
+              
+                      ETConfiguration configuration = new ETConfiguration();
+                      configuration.set("clientId", clientId);
+                      configuration.set("clientSecret", clientSecret);
+                      
+                      try
+                      {
+                          ETClient client = new ETClient(configuration);
+                          System.out.println("\n** Successfully connected to Marketing Cloud!");
+                          System.out.format("accessToken = %s\n\n", client.getAccessToken());
+                      }
+                      catch(ETSdkException e)
+                      {
+                          System.out.println("** Error: " + e.toString());
+                      }
+                  }
+              }
             </code>
           </pre>
     
           <p class="card-text">Like before, run the command below in a Terminal window to Build the project and create a jar package.</p>
           <pre class="command-line" data-user="sanjay" data-host="MacBook">
             <code class="language-bash">
-                mvn package
+              mvn clean package
             </code>
           </pre>
   
           <p class="card-text">Run the command below in a Terminal window to run your Java application.</p>
           <pre class="command-line" data-user="sanjay" data-host="MacBook">
             <code class="language-bash">
-                mvn -q exec:java "-Dexec.mainClass=com.sfmcsamples.App"
+              mvn exec:java "-Dexec.mainClass=com.sfmcsamples.App"
             </code>
           </pre>
       

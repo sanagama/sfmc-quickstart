@@ -25,11 +25,11 @@
         <pre class="command-line" data-user="sanjay" data-host="MacBook">
           <code class="language-bash">
             cd ~
-            mvn archetype:generate "-DgroupId=com.sfmcsamples" "-DartifactId=sfmc-java-sample" "-DarchetypeArtifactId=maven-archetype-quickstart" "-Dversion=1.0.0"
+            mvn archetype:generate -B "-DgroupId=com.sfmcsamples" "-DartifactId=sfmc-java-sample" "-DarchetypeArtifactId=maven-archetype-quickstart" "-Dversion=1.0.0"
           </code>
         </pre>
 
-        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new empty Java project for your app.</p>
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new empty Maven project for your Java app.</p>
       </div>
     </div>
   </div>
@@ -51,57 +51,38 @@
           <p class="card-text">You should have a file called <code>pom.xml</code> in your Maven project located in the directory <code>~/sfmc-java-sample</code>.</p>
           
           <p class="card-text">Open <code>pom.xml</code> in your favorite text editor and replace the contents with the code below. This adds a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> to your Maven project.</p>
-          <p class="card-text"><strong>If you're using Java 9: </strong>keep the section that follows <code>NOTE:</code> in <code>pom.xml</code> below.
   
           <p class="card-text">Save and close the file.</p>
 
-          <pre>
-            <code class="language-xml">
-                &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-                &lt;modelVersion>4.0.0&lt;/modelVersion>
-                &lt;groupId>com.sfmcsamples&lt;/groupId>
-                &lt;artifactId>sfmc-java-sample&lt;/artifactId>
-                &lt;packaging>jar&lt;/packaging>
-                &lt;version>1.0.0&lt;/version>
-                &lt;name>sfmc-java-sample&lt;/name>
-                &lt;url>http://maven.apache.org&lt;/url>
-                &lt;dependencies>
-                  &lt;dependency>
-                    &lt;groupId>junit&lt;/groupId>
-                    &lt;artifactId>junit&lt;/artifactId>
-                    &lt;version>3.8.1&lt;/version>
-                    &lt;scope>test&lt;/scope>
-                  &lt;/dependency>
+          <script type="text/plain" class="language-xml">
+            <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+              <modelVersion>4.0.0</modelVersion>
+              <groupId>com.sfmcsamples</groupId>
+              <artifactId>sfmc-java-sample</artifactId>
+              <packaging>jar</packaging>
+              <version>1.0.0</version>
+              <name>sfmc-java-sample</name>
+              <url>http://maven.apache.org</url>
 
-                  &lt;!-- Add a reference to the Marketing Cloud Java SDK -->
-                  &lt;dependency>
-                    &lt;groupId>com.github.salesforce-marketingcloud&lt;/groupId>
-                    &lt;artifactId>fuelsdk&lt;/artifactId>
-                    &lt;version>1.2.2&lt;/version>
-                  &lt;/dependency>
-                &lt;/dependencies>
-
-                &lt;!-- NOTE: keep this section if you're using Java 9. Delete if you're using an older version of Java -->
-                &lt;build>
-                  &lt;plugins>
-                    &lt;plugin>
-                      &lt;groupId>org.apache.maven.plugins&lt;/groupId>
-                      &lt;artifactId>maven-compiler-plugin&lt;/artifactId>
-                      &lt;configuration>
-                        &lt;source>1.9&lt;/source>
-                        &lt;target>1.9&lt;/target>
-                        &lt;compilerArgs>
-                          &lt;arg>--add-modules=java.se.ee</arg>
-                        &lt;/compilerArgs>
-                      &lt;/configuration>
-                    &lt;/plugin>
-                  &lt;/plugins>
-                &lt;/build>
-                              
-              &lt;/project>
-            </code>
-          </pre>
+              <!-- Project dependencies -->
+              <dependencies>
+                <dependency>
+                  <groupId>junit</groupId>
+                  <artifactId>junit</artifactId>
+                  <version>3.8.1</version>
+                  <scope>test</scope>
+                </dependency>
+            
+                <!-- Add a reference to the Marketing Cloud Java SDK -->
+                <dependency>
+                  <groupId>com.github.salesforce-marketingcloud</groupId>
+                  <artifactId>fuelsdk</artifactId>
+                  <version>1.2.2</version>
+                </dependency>
+              </dependencies>
+            </project>
+          </script>
 
           <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully crested a starter Maven project and added a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK.</a> Maven will automatically resolve, download, and install all dependencies for you when you build the project.</p>
           <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You're ready to write some Java code that uses Marketing Cloud!</p>
@@ -111,7 +92,7 @@
 </div>
 
 <div class="container text-center">
-    <a class="btn btn-primary btn-md m-4 button-fixed-width-300 active" style="text-align:center" href="/sdk/java3">Go to step 2</a>
+    <a class="btn btn-primary btn-md m-4 button-fixed-width-300 active" style="text-align:center" href="/sdk/java3">Go to step 3</a>
 </div>
 
 <% include ../partials/footer.ejs %>
