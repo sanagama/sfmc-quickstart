@@ -8,9 +8,13 @@ export let javaPage1 = (req: Request, res: Response) => {
   });
 };
 
-// Java SDK routes
 export let javaPage2 = (req: Request, res: Response) => {
   res.render("sdk/java2", {
+  });
+};
+
+export let javaPage3 = (req: Request, res: Response) => {
+  res.render("sdk/java3", {
   });
 };
 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<% include ../partials/header-java.ejs %>
+
+<!-- Turorial steps -->
+<div class="container">
+
+  <p class="mt-3">In this section you will create <strong>two</strong> Java apps that use the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a>.</p>
+  <p class="mt-3">The first app will test if you can connect to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>. The second app will connect to your Marketing Cloud account and =create a new contact, send a test e-mail to the contact and check status of the e-mail.</p>
+  
+  <!-- Step 1 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 3.1: Get an API key for Marketing Cloud</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-3">You need an API key to use the Marketing Cloud Java SDK.</h6>
+        <p class="card-text">Follow instructions at <a href="https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-getting-started.meta/mc-getting-started/get-api-key.htm" target="_blank">Get an API key</a> to get the <code>Client ID</code> and <code>Client Secret</code> for your Marketing Cloud account.</p>
+        <p class="card-text"><span class="fa fa-exclamation text-warning"></span>&nbsp;You will need your <code>Client ID</code> and <code>Client Secret</code> in the next step.</p>
+      </div>
+    </div>
+  </div>
+      
+  <!-- Step 2 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 3.2: The first Java app</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-3">This Java app tests if you can connect to your Marketing Cloud account using your <code>Client ID</code> and <code>Client Secret</code>.</h6>
+
+        <p class="card-text">You should have a file called <code>App.java</code> in your Maven project located at <code>~/sfmc-java-sample/src/main/java/com/sfmcsamples/App.java</code>. 
+        Open this file in your favorite text editor and replace the contents with the code below. Save and close the file.</p>
+
+        <p class="card-text"><span class="fa fa-exclamation text-warning"></span>&nbsp;Remember to replace <code>ClientID</code> and <code>ClientSecret</code> in the Java code below with yours from <strong>Step 1</strong>.</p>
+        
+        <pre>
+          <code class="language-java">
+              package com.sfmcsamples;
+
+              /**
+               * Hello world!
+               *
+               */
+              public class App 
+              {
+                  public static void main( String[] args )
+                  {
+                      System.out.println( "Hello World!" );
+                  }
+              }
+          </code>
+        </pre>
+
+        <p class="card-text">Run the command below in a Terminal window to Build the project and create a jar package.></p>
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+              mvn package
+          </code>
+        </pre>
+
+        <p class="card-text">Run the command below in a Terminal window to run your Java application. Omit the <code>-q</code> in the command below to see info messages from Maven.</p>
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+              mvn -q exec:java "-Dexec.mainClass=com.sfmcsamples.App"
+          </code>
+        </pre>
+  
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created your first Java app that uses Marketing Cloud!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 3.3: The second Java app</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-3">This Java app connects to your Marketing Cloud account, creates a new contact, sends a test e-mail to the contact and checks status of the e-mail.</h6>
+
+          <p class="card-text">Like you did before, open the file <code>App.java</code> in your favorite text editor and replace the contents with the code below. Save and close the file.</p>
+  
+          <p class="card-text"><span class="fa fa-exclamation text-warning"></span>&nbsp;Remember to replace <code>ClientID</code> and <code>ClientSecret</code> in the Java code below with yours from <strong>Step 1</strong>.</p>
+          
+          <pre>
+            <code class="language-java">
+            </code>
+          </pre>
+    
+          <p class="card-text">Like before, run the command below in a Terminal window to Build the project and create a jar package.</p>
+          <pre class="command-line" data-user="sanjay" data-host="MacBook">
+            <code class="language-bash">
+                mvn package
+            </code>
+          </pre>
+  
+          <p class="card-text">Run the command below in a Terminal window to run your Java application.</p>
+          <pre class="command-line" data-user="sanjay" data-host="MacBook">
+            <code class="language-bash">
+                mvn -q exec:java "-Dexec.mainClass=com.sfmcsamples.App"
+            </code>
+          </pre>
+      
+          <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;Congratulations! You have sucessfully created <strong>two</strong> Java apps that use Marketing Cloud.</p>
+      </div>
+    </div>
+</div>
+
+<% include ../partials/footer.ejs %>
+
+</body>
+</html>

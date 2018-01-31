@@ -14,13 +14,10 @@ h2 {
 .dropdown-item:hover {
   background-color: rgb(150, 150, 245);}
 
-a.disabled {
-  cursor: not-allowed;}
-
 a.disabled:hover {
     cursor: not-allowed;}
 
-.button-fixed-width-250 {
-  min-width: 230px !important;
-  max-width: 250px !important;
+.button-fixed-width-300 {
+  min-width: 250px !important;
+  max-width: 300px !important;
   text-align:left;}

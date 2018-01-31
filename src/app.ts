@@ -38,5 +38,6 @@ app.get("/api/rest", apiRoute.restPage1);
 app.get("/api/rest2", apiRoute.restPage2);
 app.get("/sdk/java", sdkRoute.javaPage1);
 app.get("/sdk/java2", sdkRoute.javaPage2);
+app.get("/sdk/java3", sdkRoute.javaPage3);
 
 module.exports = app;

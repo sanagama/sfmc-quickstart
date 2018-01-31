@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<% include ../partials/header-java.ejs %>
+
+<!-- Turorial steps -->
+<div class="container">
+
+  <p class="mt-3">Now that you have installed <a href="https://java.com" target="_blank">Java</a> and <a href="https://maven.apache.org" target="_blank">Apache Maven</a>, let's create a starter <a href="https://maven.apache.org" target="_blank">Maven</a> project and add a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a>.</p>
+
+  <!-- Step 1 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.1: Create a new Java project using Maven</div>
+      <div class="card-body">
+        <p class="card-text">Run the commands below in a Terminal window to create an empty Java project using Maven.
+          This will create the directory <code>sfmc-java-sample</code> with a basic Maven project and <code>pom.xml</code> file. If you prefer, you can perform this step using an IDE such as NetBeans or Eclipse.
+        </p>
+
+        <pre class="command-line" data-user="sanjay" data-host="MacBook">
+          <code class="language-bash">
+            cd ~
+            mvn archetype:generate "-DgroupId=com.sfmcsamples" "-DartifactId=sfmc-java-sample" "-DarchetypeArtifactId=maven-archetype-quickstart" "-Dversion=1.0.0"
+          </code>
+        </pre>
+
+        <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new empty Java project for your app.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.2: Add a reference to the Marketing Cloud Java SDK</div>
+      <div class="card-body">
+
+          <p class="card-text">Change directories into your newly created project.</p>
+
+          <pre class="command-line" data-user="sanjay" data-host="MacBook">
+            <code class="language-bash">
+              cd ~/sfmc-java-sample
+            </code>
+          </pre>
+  
+          <p class="card-text">You should have a file called <code>pom.xml</code> in your Maven project located in the directory <code>~/sfmc-java-sample</code>.</p>
+          
+          <p class="card-text">Open <code>pom.xml</code> in your favorite text editor and replace the contents with the code below. This adds a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> to your Maven project.</p>
+          <p class="card-text"><strong>If you're using Java 9: </strong>keep the section that follows <code>NOTE:</code> in <code>pom.xml</code> below.
+  
+          <p class="card-text">Save and close the file.</p>
+
+          <pre>
+            <code class="language-xml">
+                &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+                &lt;modelVersion>4.0.0&lt;/modelVersion>
+                &lt;groupId>com.sfmcsamples&lt;/groupId>
+                &lt;artifactId>sfmc-java-sample&lt;/artifactId>
+                &lt;packaging>jar&lt;/packaging>
+                &lt;version>1.0.0&lt;/version>
+                &lt;name>sfmc-java-sample&lt;/name>
+                &lt;url>http://maven.apache.org&lt;/url>
+                &lt;dependencies>
+                  &lt;dependency>
+                    &lt;groupId>junit&lt;/groupId>
+                    &lt;artifactId>junit&lt;/artifactId>
+                    &lt;version>3.8.1&lt;/version>
+                    &lt;scope>test&lt;/scope>
+                  &lt;/dependency>
+
+                  &lt;!-- Add a reference to the Marketing Cloud Java SDK -->
+                  &lt;dependency>
+                    &lt;groupId>com.github.salesforce-marketingcloud&lt;/groupId>
+                    &lt;artifactId>fuelsdk&lt;/artifactId>
+                    &lt;version>1.2.2&lt;/version>
+                  &lt;/dependency>
+                &lt;/dependencies>
+
+                &lt;!-- NOTE: keep this section if you're using Java 9. Delete if you're using an older version of Java -->
+                &lt;build>
+                  &lt;plugins>
+                    &lt;plugin>
+                      &lt;groupId>org.apache.maven.plugins&lt;/groupId>
+                      &lt;artifactId>maven-compiler-plugin&lt;/artifactId>
+                      &lt;configuration>
+                        &lt;source>1.9&lt;/source>
+                        &lt;target>1.9&lt;/target>
+                        &lt;compilerArgs>
+                          &lt;arg>--add-modules=java.se.ee</arg>
+                        &lt;/compilerArgs>
+                      &lt;/configuration>
+                    &lt;/plugin>
+                  &lt;/plugins>
+                &lt;/build>
+                              
+              &lt;/project>
+            </code>
+          </pre>
+
+          <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully crested a starter Maven project and added a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK.</a> Maven will automatically resolve, download, and install all dependencies for you when you build the project.</p>
+          <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You're ready to write some Java code that uses Marketing Cloud!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center">
+    <a class="btn btn-primary btn-md m-4 button-fixed-width-300 active" style="text-align:center" href="/sdk/java3">Go to step 2</a>
+</div>
+
+<% include ../partials/footer.ejs %>
+
+</body>
+</html>
