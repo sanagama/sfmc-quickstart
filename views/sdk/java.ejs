@@ -23,28 +23,13 @@
         <h6 class="card-subtitle mb-3">Skip this step if you already have Brew and Java 8 SDK installed on your Mac.</h6>
 
         <p class="card-text">Run the command below in a Terminal window to install <a href="https://brew.sh" target="_blank">Homebrew.</a></p>
-        <pre class="command-line" data-user="sanjay" data-host="MacBook">
-          <code class="language-bash">
-            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-          </code>
-        </pre>
-
+        <pre class="command-line" style="max-height: 30em" data-user="sanjay" data-host="MacBook" data-src="/code-snippets/macos/get-brew.sh"></pre>
+        
         <p class="card-text">Close the Terminal window you opened earlier and open a new one. Run the command below in the new Terminal window to install the Java 8 Runtime and SDK.</p>
-        <pre class="command-line" data-user="sanjay" data-host="MacBook">
-          <code class="language-bash">
-            brew update
-            brew tap caskroom/versions
-            brew cask install java8
-          </code>
-        </pre>
-
+        <pre class="command-line" style="max-height: 30em" data-user="sanjay" data-host="MacBook" data-src="/code-snippets/macos/brew-install-java8.sh"></pre>
+        
         <p class="card-text">Run the command below in the Terminal window to verify that the Java 8 SDK is installed properly. The output should be similar to <code>java version "1.8.0_162"</code></p>
-
-        <pre class="command-line" data-user="sanjay" data-host="MacBook">
-          <code class="language-bash">
-            javac -version
-          </code>
-        </pre>
+        <pre class="command-line" style="max-height: 30em" data-user="sanjay" data-host="MacBook" data-src="/code-snippets/macos/java8-version.sh"></pre>
 
         <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully installed Homebrew and the Java 8 SDK on your Mac!</p>
       </div>
@@ -59,19 +44,8 @@
         <h6 class="card-subtitle mb-3">Skip this step if you already have Maven installed on your Mac.</h6>
         <p class="card-text">We'll use <a href="https://maven.apache.org" target="_blank">Apache Maven</a> to help manage dependencies, build, test and run Java projects. Run the command below in a Terminal window to install Maven.</p>
 
-        <pre class="command-line" data-user="sanjay" data-host="MacBook">
-          <code class="language-bash">
-            brew install maven
-          </code>
-        </pre>
-
         <p class="card-text">Run the command below in the Terminal window to verify that the Maven is installed properly.</p>
-
-        <pre class="command-line" data-user="sanjay" data-host="MacBook">
-          <code class="language-bash">
-            mvn -v
-          </code>
-        </pre>
+        <pre class="command-line" style="max-height: 30em" data-user="sanjay" data-host="MacBook" data-src="/code-snippets/macos/maven-version.sh"></pre>
         
         <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have successfully installed Java 8 SDK and Maven.</p>
         <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You have everything you need to create Java apps on your Mac!</p>

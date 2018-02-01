@@ -1,0 +1,1 @@
+cd ~/sfmc-java-sample
