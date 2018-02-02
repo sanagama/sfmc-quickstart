@@ -104,7 +104,6 @@ public class App
             {
                 System.out.println("** ERROR: could not get Sent Event response:\n" + sentEventResponse.toString());
             }
-
         }
         catch(ETSdkException e)
         {
