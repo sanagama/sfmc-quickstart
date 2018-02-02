@@ -9,82 +9,106 @@ public class App
         // TODO: Update these variables before you compile & run this sample
         String clientId = "-- replace me --";
         String clientSecret = "-- replace me --";
-        String contactEmailAddress = "-- replace me --";
-        String contactFirstName = "-- replace me --";
-        String contactLastName = "-- replace me --";
+        String sendToEmailAddress = "-- replace me --";
 
+        String emailKey = "demo-" + org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(20);
+        String triggeredSendKey = "demo-" + org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(20);
+
+        System.out.println("\nDEMO: Connect to Marketing Cloud, create a contact, create an e-mail, send e-mail and check status.\n");
         try
         {
-            System.out.println("\nDEMO: Connect to Marketing Cloud, create a contact, create an e-mail, send e-mail and check status.\n");
-
-            // Establish a connection to Marketing Cloud 
-            ETConfiguration configuration = new ETConfiguration();
-            configuration.set("clientId", clientId);
-            configuration.set("clientSecret", clientSecret);
-            ETClient etClient = new ETClient(configuration);
+            // Establish a connection to Marketing Cloud
+            ETConfiguration config = new ETConfiguration();
+            config.set("clientId", clientId);
+            config.set("clientSecret", clientSecret);
+            ETClient client = new ETClient(config);
             System.out.println("\nConnected to Marketing Cloud!");
-
-            // Create a new subscriber. An ETSubscriber object represents an email subscriber in Marketing Cloud.
-            System.out.println("Creating a new subscriber...");
-            ETSubscriber subscriber = new ETSubscriber();
-            subscriber.setClient(etClient);
-            subscriber.setKey("demo-contact");
-            subscriber.setEmailAddress(contactEmailAddress);
-            subscriber.setStatus(ETSubscriber.Status.ACTIVE);
-            subscriber.setPreferredEmailType(ETEmail.Type.HTML);
-            subscriber.setAttributes(java.util.Arrays.asList(new ETProfileAttribute("FirstName", contactFirstName), new ETProfileAttribute("LastName", contactLastName)));
-            ETResponse<ETSubscriber> subscriberResponse = etClient.create(subscriber);
-            if(!subscriberResponse.getResponseCode().equals("OK"))
-            {
-                throw new ETSdkException("** ERROR: could not create a new subscriber: " + subscriberResponse.toString());
-            }
-            System.out.println("Created new subscriber: " + subscriberResponse.getObject().getEmailAddress());
 
             // Create a new e-mail
             System.out.println("Creating a new e-mail...");
-            ETEmail etEmail = new ETEmail();
-            etEmail.setKey("demo-email");
-            etEmail.setName("demo-email");
-            etEmail.setSubject("E-mail from Java SDK demo");
-            etEmail.setHtmlBody("<b>What a wonderful world!</b>");
-            etEmail.setTextBody("What a wonderful world!");
-            ETResponse<ETEmail> emailResponse = etClient.create(etEmail);
-            if(!emailResponse.getResponseCode().equals("OK"))
+            ETEmail email = new ETEmail();
+            email.setId(emailKey);
+            email.setKey(emailKey);
+            email.setName(emailKey);
+            email.setSubject("Test e-mail from Marketing Cloud Java SDK demo");
+            email.setHtmlBody("<p>Learn more about <a href=\"https://www.salesforce.com/products/marketing-cloud/overview\">Marketing Cloud</a></p>");
+            email.setTextBody("Learn more about Marketing Cloud: https://www.salesforce.com/products/marketing-cloud/overview");
+            ETResponse<ETEmail> emailResponse = client.create(email);
+            if(emailResponse.getStatus() == ETResult.Status.OK)
             {
-                throw new ETSdkException("** ERROR: could not create a new email");
+                System.out.println("Created e-mail: " + email.getKey());
             }
-            System.out.println("Created new e-mail: " + emailResponse.getObject().getName());
+            else
+            {
+                System.out.println("** ERROR: could not create new e-mail:\n");
+                throw new ETSdkException(emailResponse.toString());
+            }
             
-            // Send e-mail to new subscriber
-            System.out.println("Sending e-mail to subscriber...");
-            ETTriggeredEmail triggeredEmail = new ETTriggeredEmail();
-            triggeredEmail.setClient(etClient);
-            triggeredEmail.setKey("demo-triggered-email");
-            triggeredEmail.setName("demo-triggered-email");
-            triggeredEmail.setEmail(etEmail);
+            // Send e-mail
+            System.out.println("Sending e-mail to: " + sendToEmailAddress + "...");
+            ETTriggeredEmail triggeredSend = new ETTriggeredEmail();
+            triggeredSend.setClient(client);
+            triggeredSend.setDescription("Marketing Cloud Java SDK demo");
+            triggeredSend.setKey(triggeredSendKey);
+            triggeredSend.setName(triggeredSendKey);
+            triggeredSend.setEmail(email);
+            triggeredSend.setPriority("High");
             SendClassification classification = new SendClassification();
             classification.setCustomerKey("Default Commercial");
-            triggeredEmail.setSendClassification(classification);
-            ETResponse<ETTriggeredEmail> sendResponse = triggeredEmail.send(subscriber);
-            if(!sendResponse.getResponseCode().equals("OK"))
+            triggeredSend.setSendClassification(classification);
+            ETResponse<ETTriggeredEmail> sendResponse = client.create(triggeredSend);
+            if(sendResponse.getStatus() == ETResult.Status.OK)
             {
-                System.out.println("sendResponse: " + sendResponse.toString());
-                // throw new ETSdkException("** ERROR: could not send e-mail");
+                System.out.println("Created Triggered send: " + triggeredSend.getName());
             }
-            System.out.println("Sent e-mail to : " + emailResponse.getObject().getName());
+            else
+            {
+                System.out.println("** ERROR: could not create Triggered Send:\n");
+                throw new ETSdkException(sendResponse.toString());
+            }
 
-            // Check e-mail status
+            triggeredSend.setStatus(ETTriggeredEmail.Status.ACTIVE);
+            sendResponse = client.update(triggeredSend);
+            if(sendResponse.getStatus() == ETResult.Status.OK)
+            {
+                System.out.println("Activated Triggered send: " + triggeredSend.getName());
+            }
+            else
+            {
+                System.out.println("** ERROR: could not activate Triggered Send:\n");
+                throw new ETSdkException(sendResponse.toString());
+            }
 
-            // Clean-up
-            System.out.println("Cleaning up...");
-            emailResponse = etClient.delete(etEmail);
-            System.out.println("Deleted e-mail: " + etEmail.getName());
-            subscriberResponse = etClient.delete(subscriber);
-            System.out.println("Deleted subscriber: " + subscriber.getEmailAddress());
+            sendResponse = triggeredSend.send(sendToEmailAddress);
+            if(sendResponse.getStatus() == ETResult.Status.OK)
+            {
+                System.out.println("Sent e-mail to: " + sendToEmailAddress);
+            }
+            else
+            {
+                System.out.println("** ERROR: could not send e-mail:\n");
+                throw new ETSdkException(sendResponse.toString());
+            }
+
+            // Sleep for a few seconds
+            System.out.println("Sleeping for 15 seconds - go check for an e-mail from Marketing Cloud in your Inbox!");
+            try { Thread.sleep(15000); } catch( InterruptedException ev) {}  
+
+            // Check e-mail send status
+            ETResponse<ETSentEvent> sentEventResponse = client.retrieve(ETSentEvent.class, "subscriberKey=" + sendToEmailAddress);
+            if(sentEventResponse.getStatus() == ETResult.Status.OK)
+            {
+                System.out.println("E-mail send response:\n" + sentEventResponse);
+            }
+            else
+            {
+                System.out.println("** ERROR: could not get Sent Event response:\n" + sentEventResponse.toString());
+            }
+
         }
         catch(ETSdkException e)
         {
-            System.out.println("** Exception: " + e.toString());
+            System.out.println("\n** Exception:\n" + e.toString());
         }
 
         System.out.println("All done.\n");
