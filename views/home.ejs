@@ -19,28 +19,38 @@
     <p class="lead">How do you want to start?</p>
 
     <div class="btn-group btn-group-lg">
-      <button type="button" class="btn btn-primary dropdown-toggle" id="sfmc-apis" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-primary dropdown-toggle m-2" id="sfmc-apis" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Use Marketing Cloud APIs
       </button>
       <div class="dropdown-menu" aria-labelledby="sfmc-apis">
-        <a class="dropdown-item" href="/api/rest">REST APIs</a>
+        <a class="dropdown-item" href="/apis/restapi">REST APIs</a>
         <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">SOAP APIs</a>
       </div>
     </div>
     
-    &nbsp;or&nbsp;
-
+    <!-- Dropdown submenu thanks to: https://github.com/twbs/bootstrap/issues/17408 -->
     <div class="btn-group btn-group-lg">
-      <button type="button" class="btn btn-primary dropdown-toggle" id="sfmc-sdks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Use a programming language
-      </button>
-      <div class="dropdown-menu" aria-labelledby="sfmc-sdks">
-        <a class="dropdown-item" href="/sdk/java">Java</a>
-        <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">C#</a>
-        <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Node.js</a>
-        <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">PHP</a>
-        <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Python</a>
-        <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Ruby</a>
+        <button class="btn btn-primary dropdown-toggle m-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Use a programming language</button>
+        <div class="dropdown-menu">
+
+          <!-- Java -->
+          <li class="dropdown-item dropdown-submenu">
+            <a tabindex="-1" href="#">Java</a>
+            <ul class="dropdown-menu">
+              <li><a href="/sdks/java/macos" bypass class="dropdown-item">macOS</a></li>
+              <li><a href="#" bypass class="dropdown-item disabled" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Windows</a></li>
+              <div class="dropdown-divider"></div>              
+              <li><a href="/sdks/java/playground" bypass class="dropdown-item">Try in playground</a></li>
+            </ul>
+          </li>
+                    
+          <!-- Other languages disabled for now -->
+          <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">C#</a>
+          <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Node.js</a>
+          <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">PHP</a>
+          <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Python</a>
+          <a class="dropdown-item disabled" href="#" data-toggle="tooltip" data-placement="auto" title="Coming soon!">Ruby</a>
+        </div>
       </div>
     </div>
   </div>
