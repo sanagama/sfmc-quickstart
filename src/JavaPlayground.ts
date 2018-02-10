@@ -4,58 +4,81 @@ import express = require("express");
 import path = require('path');
 import Utils = require('./utils');
 import shell = require('shelljs');
+var async = require("async");
 
 export default class JavaPlayground
 {
-    private _cmdCreateProject: string;
-
     constructor(app: express.Express)
     {
-        Utils.logDebug("JavaPlayground c'tor called");
         this.initialize();
     }
     
     private initialize(): void
     {
-        this._cmdCreateProject = 'mvn archetype:generate -B "-DgroupId=com.sfmcsamples" "-DartifactId=sfmc-java-sample" "-DarchetypeArtifactId=maven-archetype-quickstart" "-Dversion=1.0.0';
     }
     
     /**
-     * createProject
+     * createProject: deletes an existing project in session's playground directory and runs Maven to create a new project
      */
     public createProject(req: express.Request, res: express.Response)
     {
-        Utils.logDebug("createProject called");
+        var responseText = "";
         var sessionId = req.session.id;
-        Utils.logDebug("sessionId= " + sessionId);
+        Utils.logDebug("createProject called. SessionId = " + sessionId);
 
-        var { stdout, stderr, code } = shell.exec('mvn -v');
-        var output = stdout;
-        res.send(output);
+        var scriptToRun = path.join(__dirname,'static','playground','java-create-project.sh');
+        var pomXml = path.join(__dirname,'static','code-snippets','java','mvn-pom.xml');
+        scriptToRun = scriptToRun + " " + sessionId + " " + pomXml;
+        //Utils.logDebug("scriptToRun = " + scriptToRun);
+
+        var { stdout, stderr, code } = shell.exec(scriptToRun);
+        if(code !== 0)
+        {
+            responseText += stderr;
+        }
+        else
+        {
+            responseText += stdout;
+        }
+        res.send(responseText);
     }
 
     /**
-     * compileProject
+     * runApp1: runs the first Java app in the playground
      */
-    public compileProject(req: express.Request, res: express.Response)
+    public runApp1(req: express.Request, res: express.Response)
     {
+        var responseText = "";
+        var sessionId = req.session.id;
+        Utils.logDebug("runApp1 called. SessionId = " + sessionId);
 
+        var scriptToRun = path.join(__dirname,'static','playground','java-run-project.sh');
+        var appJava = path.join(__dirname,'static','code-snippets','java','app1-playground.java');
+        scriptToRun = scriptToRun + " " + sessionId + " " + appJava;
+        
+        //Utils.logDebug("scriptToRun = " + scriptToRun);
+
+        responseText += shell.exec(scriptToRun).stdout;
+        res.send(responseText);
     }
 
     /**
-     * copyAppJava
+     * runApp2: runs the second Java app in the playground
      */
-    public copyAppJava(req: express.Request, res: express.Response)
+    public runApp2(req: express.Request, res: express.Response)
     {
+        var responseText = "";
+        var sessionId = req.session.id;
+        Utils.logDebug("runApp2 called. SessionId = " + sessionId);
 
-    }
+        var scriptToRun = path.join(__dirname,'static','playground','java-run-project.sh');
+        var appJava = path.join(__dirname,'static','code-snippets','java','app2-playground.java');
+        scriptToRun = scriptToRun + " " + sessionId + " " + appJava;
+        
+        //Utils.logDebug("scriptToRun = " + scriptToRun);
 
-    /**
-     * copyAppJava
-     */
-    public runApp(req: express.Request, res: express.Response)
-    {
-
+        responseText += shell.exec(scriptToRun).stdout;
+        res.send(responseText);
     }
 }
  

@@ -18,10 +18,15 @@ a.disabled:hover {
     cursor: not-allowed;}
 
 .button-fixed-width-300 {
-  min-width: 250px !important;
+  min-width: 300px !important;
   max-width: 300px !important;
   text-align:left;}
 
+.button-fixed-width-400 {
+  min-width: 400px !important;
+  max-width: 400px !important;
+  text-align:left;}
+    
 .dropdown-submenu { position: relative }
 .dropdown-submenu>.dropdown-menu {
     top: 0;

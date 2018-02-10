@@ -38,14 +38,14 @@ app.get('/', function(req, res) { res.render("home"); });
 app.get('/sdks/java/macos', function(req, res) { res.render("sdks/java/macos/java-mac-1"); });
 app.get('/sdks/java/macos/java-mac-2', function(req, res) { res.render("sdks/java/macos/java-mac-2"); });
 app.get('/sdks/java/macos/java-mac-3', function(req, res) { res.render("sdks/java/macos/java-mac-3"); });
-app.get('/sdks/java/windows', function(req, res) { res.render("sdks/java/windows/java-windows-1"); });
-app.get('/sdks/java/playground', function(req, res) { res.render("sdks/java/playground/java-play-1"); });
-app.get('/sdks/java/playground/java-play-2', function(req, res) { res.render("sdks/java/playground/java-play-2"); });
-app.get('/sdks/java/playground/java-play-3', function(req, res) { res.render("sdks/java/playground/java-play-3"); });
+//app.get('/sdks/java/windows', function(req, res) { res.render("sdks/java/windows/java-windows-1"); });
 
-app.get('/apis/restapi', function(req, res) { res.render("apis/restapi-1"); });
+app.get('/playgrounds/java', function(req, res) { res.render("playgrounds/java/java-play-1"); });
+app.get('/playgrounds/java/java-play-2', function(req, res) { res.render("playgrounds/java/java-play-2"); });
+app.get('/playgrounds/java/java-play-3', function(req, res) { res.render("playgrounds/java/java-play-3"); });
 
 // TBD: add more routes later
+//app.get('/apis/restapi', function(req, res) { res.render("apis/rest/restapi-1"); });
 //app.get('/apis/restapi-2', function(req, res) { res.render("apis/restapi-2"); });
 //app.get('/apis/soapapi', function(req, res) { res.render("apis/soapapi-1"); });
 
@@ -55,13 +55,10 @@ const javaPlayground = new JavaPlayground(app);
 app.get('/playgound-api/java/createproject', function(req, res) {
     javaPlayground.createProject(req, res); });
 
-app.get('/playgound-api/java/compileproject', function(req, res) {
-    javaPlayground.compileProject(req, res); });
+app.get('/playgound-api/java/runapp1', function(req, res) {
+    javaPlayground.runApp1(req, res); });
     
-app.get('/playgound-api/java/copyappjava', function(req, res) {
-    javaPlayground.copyAppJava(req, res); });
-
-app.get('/playgound-api/java/runapp', function(req, res) {
-    javaPlayground.runApp(req, res); });
+app.get('/playgound-api/java/runapp2', function(req, res) {
+    javaPlayground.runApp2(req, res); });
 
 module.exports = app;
