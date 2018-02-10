@@ -22,24 +22,15 @@ export default class JavaPlayground
      */
     public createProject(req: express.Request, res: express.Response)
     {
-        var responseText = "";
         var sessionId = req.session.id;
         Utils.logDebug("createProject called. SessionId = " + sessionId);
 
-        var scriptToRun = path.join(__dirname,'static','playground','java-create-project.sh');
-        var pomXml = path.join(__dirname,'static','code-snippets','java','mvn-pom.xml');
+        var scriptToRun = path.join(__dirname,'../playground-scripts','java-create-project.sh');
+        var pomXml = path.join(__dirname,'../static','code-snippets','java','mvn-pom.xml');
         scriptToRun = scriptToRun + " " + sessionId + " " + pomXml;
         //Utils.logDebug("scriptToRun = " + scriptToRun);
 
-        var { stdout, stderr, code } = shell.exec(scriptToRun);
-        if(code !== 0)
-        {
-            responseText += stderr;
-        }
-        else
-        {
-            responseText += stdout;
-        }
+        var responseText = shell.exec(scriptToRun).stdout;
         res.send(responseText);
     }
 
@@ -48,17 +39,15 @@ export default class JavaPlayground
      */
     public runApp1(req: express.Request, res: express.Response)
     {
-        var responseText = "";
         var sessionId = req.session.id;
         Utils.logDebug("runApp1 called. SessionId = " + sessionId);
 
-        var scriptToRun = path.join(__dirname,'static','playground','java-run-project.sh');
-        var appJava = path.join(__dirname,'static','code-snippets','java','app1-playground.java');
+        var scriptToRun = path.join(__dirname,'../playground-scripts','java-run-project.sh');
+        var appJava = path.join(__dirname,'../static','code-snippets','java','app1-playground.java');
         scriptToRun = scriptToRun + " " + sessionId + " " + appJava;
         
         //Utils.logDebug("scriptToRun = " + scriptToRun);
-
-        responseText += shell.exec(scriptToRun).stdout;
+        var responseText = shell.exec(scriptToRun).stdout;
         res.send(responseText);
     }
 
@@ -67,17 +56,15 @@ export default class JavaPlayground
      */
     public runApp2(req: express.Request, res: express.Response)
     {
-        var responseText = "";
         var sessionId = req.session.id;
         Utils.logDebug("runApp2 called. SessionId = " + sessionId);
 
-        var scriptToRun = path.join(__dirname,'static','playground','java-run-project.sh');
-        var appJava = path.join(__dirname,'static','code-snippets','java','app2-playground.java');
+        var scriptToRun = path.join(__dirname,'../playground-scripts','java-run-project.sh');
+        var appJava = path.join(__dirname,'../static','code-snippets','java','app2-playground.java');
         scriptToRun = scriptToRun + " " + sessionId + " " + appJava;
         
         //Utils.logDebug("scriptToRun = " + scriptToRun);
-
-        responseText += shell.exec(scriptToRun).stdout;
+        var responseText = shell.exec(scriptToRun).stdout;
         res.send(responseText);
     }
 }

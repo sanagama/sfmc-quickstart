@@ -36,11 +36,12 @@
           <p class="card-text">Change directories into your newly created project.</p>
           <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/java/cd-sample-dir.sh"></pre>
   
-          <p class="card-text">You should have a file called <code>pom.xml</code> in your Maven project located in the directory <code>~/sfmc-java-sample</code>.</p>
-          <p class="card-text">Open <code>pom.xml</code> in your favorite text editor and replace its contents with the XML below. This adds a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> to your Maven project.</p>
-          <p class="card-text">Save and close the file.</p>
+          <p class="card-text">You should have a file called <code>pom.xml</code> in your Maven project located in the directory <code>~/sfmc-java-sample</code>. Open <code>pom.xml</code> in your favorite text editor and replace its contents with the XML below. Save and close the file.</p>
+          <p class="card-text">Lines <code>20-25</code> add a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> to your Maven project.
+            With this change, Maven automatically downloads and uses the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK</a> from the 
+            <a href="https://mvnrepository.com/artifact/com.github.salesforce-marketingcloud/fuelsdk" target="_blank">Maven Central repository</a> when you build your project.</p>
 
-          <pre data-src="/code-snippets/java/mvn-pom.xml"></pre>
+          <pre class="line-numbers" data-line="20-25" data-src="/code-snippets/java/mvn-pom.xml"></pre>
 
           <p class="card-text"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a starter Maven project and added a reference to the <a href="http://salesforce-marketingcloud.github.io/FuelSDK-Java/" target="_blank">Marketing Cloud Java SDK.</a> Maven will automatically resolve, download, and install all dependencies for you when you build the project.</p>
           <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You're ready to write some Java code that uses Marketing Cloud!</p>

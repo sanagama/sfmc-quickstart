@@ -17,10 +17,15 @@ app.set("port", PORT);
 app.set("views", path.join(__dirname, "../views"));
 app.set('view engine', 'ejs');
 
+// Use helmet
+// See this for more info: https://expressjs.com/en/advanced/best-practice-security.html
+var helmet = require('helmet')
+app.use(helmet());
+
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
     name: 'server-session-cookie-id',
-    secret: 'keyboard cat',
+    secret: 'sanagama copper',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
@@ -30,8 +35,8 @@ app.use(compression());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "static")));
-app.use(favicon(path.join(__dirname,'static','images','favicons', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, "../static")));
+app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
 // Routes
 app.get('/', function(req, res) { res.render("home"); });
