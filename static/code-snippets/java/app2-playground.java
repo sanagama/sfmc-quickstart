@@ -9,7 +9,7 @@ public class App
         // Use ClientId and ClientSecret from the playground
         String clientId = System.getenv("SFMC_PLAYGROUND_CLIENTID");
         String clientSecret = System.getenv("SFMC_PLAYGROUND_CLIENTSECRET");
-        String sendToEmailAddress = "-- receipient's e-mail address --";
+        String sendToEmailAddress = "-- receipient e-mail address --";
 
         String emailKey = "play-" + org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(20);
         String triggeredSendKey = "play-" + org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(20);
@@ -99,14 +99,14 @@ public class App
             ETResponse<ETSentEvent> sentEventResponse = client.retrieve(ETSentEvent.class, "subscriberKey=" + sendToEmailAddress);
             if(sentEventResponse.getStatus() == ETResult.Status.OK)
             {
-                System.out.println("E-mail send response:\n" + sentEventResponse);
+                System.out.println("E-mail send response:\n" + sentEventResponse.getResult().toString());
             }
             else
             {
                 System.out.println("** ERROR: could not get Sent Event response:\n" + sentEventResponse.toString());
             }
 
-            System.out.println("Please check your Inbox for an e-mail from Marketing Cloud.");
+            System.out.println("\nAll done. Please check the Inbox of " + "'" + sendToEmailAddress + "'" + " for an e-mail from Marketing Cloud.");
         }
         catch(ETSdkException e)
         {

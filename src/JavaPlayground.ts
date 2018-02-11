@@ -7,7 +7,6 @@ import shell = require('shelljs');
 import https = require('https');
 var reCAPTCHA = require('recaptcha2');
 
-
 export default class JavaPlayground
 {
     constructor(app: express.Express)
@@ -51,8 +50,7 @@ export default class JavaPlayground
         scriptToRun = scriptToRun + " " + sessionId + " " + appJava;
         
         //Utils.logDebug("scriptToRun = " + scriptToRun);
-        var responseText = shell.exec(scriptToRun).stdout; // sync call
-        res.send(responseText);
+        res.send(shell.exec(scriptToRun).stdout); // sync call
     }
 
     /**
@@ -61,8 +59,6 @@ export default class JavaPlayground
      */
     public runApp2(req: express.Request, res: express.Response)
     {
-        var self = this;
-        var responseText = "";
         var sessionId = req.session.id;
         Utils.logDebug("runApp2 called. SessionId = " + sessionId);
 
@@ -82,16 +78,12 @@ export default class JavaPlayground
             var appJava = path.join(__dirname,'../static','code-snippets','java','app2-playground.java');
             scriptToRun = scriptToRun + " " + sessionId + " " + appJava + " " + emailAddress;
 
-            Utils.logDebug("scriptToRun = " + scriptToRun);
-            //responseText += shell.exec(scriptToRun).stdout;
-
-            responseText += "sent e-mail";
-            res.send(responseText);
+            //Utils.logDebug("scriptToRun = " + scriptToRun);
+            res.send(shell.exec(scriptToRun).stdout); // sync call
         })
         .catch(function(errorCodes: any) {
           // invalid
-          responseText = "** ERROR: CAPTCHA verification failed. No e-mail sent. Complete step 3.1 and try again.";
-          res.send(responseText);
+          res.send("** ERROR: CAPTCHA verification failed. No e-mail sent. Please complete step 3.1 and try again.");
         });
     }
 }

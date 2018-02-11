@@ -38,9 +38,14 @@ $(document).ready(function() {
     }).done (function (data) {
 
       $('#buttonRunApp').removeClass('disabled');
-      $('#successRunApp').removeClass('hide-element');
       $('#outputRunApp').css("text-decoration", "none");
       $('#outputRunApp').text(data);
+
+      // show 'congrats' message if there were no errors
+      if (data.indexOf("** Error") == -1)
+      {
+        $('#successRunApp').removeClass('hide-element');
+      }
     });
   });
 
@@ -64,9 +69,14 @@ $(document).ready(function() {
       grecaptcha.reset();
 
       $('#buttonRunApp2').removeClass('disabled');
-      $('#successRunApp').removeClass('hide-element');
       $('#outputRunApp').css("text-decoration", "none");
       $('#outputRunApp').text(data);
+
+      // show 'congrats' message if there were no errors
+      if (data.indexOf("** Error") == -1)
+      {
+        $('#successRunApp').removeClass('hide-element');
+      }
     });
   });
 
