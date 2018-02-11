@@ -14,10 +14,12 @@ $(document).ready(function() {
       url: "/playgound-api/java/createproject",
       dataType: "text"
     }).done (function (data) {
+
       $('#buttonCreateProject').removeClass('disabled');
       $('#successCreateProject').removeClass('hide-element');
       $('#outputCreateProject').css("text-decoration", "none");
       $('#outputCreateProject').text(data);
+
     });
   });
 
@@ -34,6 +36,7 @@ $(document).ready(function() {
       url: "/playgound-api/java/runapp1",
       dataType: "text"
     }).done (function (data) {
+
       $('#buttonRunApp').removeClass('disabled');
       $('#successRunApp').removeClass('hide-element');
       $('#outputRunApp').css("text-decoration", "none");
@@ -41,38 +44,28 @@ $(document).ready(function() {
     });
   });
 
-  // Java playground scripts - java-play-3
-  $('#buttonRunApp2').click(function() {
+  // Java playground scripts - java-play-3 - submit form
+  $('#frmRunApp2').submit(function(e) {
 
-    if($("#divEmail").valid())
-    {
-      $('#buttonRunApp2').addClass('disabled');
-      $('#successRunApp').addClass('hide-element');
-      $('#outputRunApp').text('Running in playground, one moment...');
-      $('#outputRunApp').css("text-decoration", "blink");
+    var frm = $('#frmRunApp2');
+    e.preventDefault();
 
-      $.ajax({
-        type: "GET",
-        url: "/playgound-api/java/runapp2",
-        dataType: "text"
-      }).done (function (data) {
-        $('#buttonRunApp2').removeClass('disabled');
-        $('#successRunApp').removeClass('hide-element');
-        $('#outputRunApp').css("text-decoration", "none");
-        $('#outputRunApp').text(data);
-      });
-    }
-    else
-    {
-      alert('enter valid e-mail address!')
-    }
+    $('#buttonRunApp2').addClass('disabled');
+    $('#successRunApp').addClass('hide-element');
+    $('#outputRunApp').text('Running in playground, one moment...');
+    $('#outputRunApp').css("text-decoration", "blink");
+  
+    $.ajax({
+      type: frm.attr('method'),
+      url: frm.attr('action'),
+      data: frm.serialize()
+    }).done (function(data) {
+
+      $('#buttonRunApp2').removeClass('disabled');
+      $('#successRunApp').removeClass('hide-element');
+      $('#outputRunApp').css("text-decoration", "none");
+      $('#outputRunApp').text(data);
+    });
   });
 
-  var javaCode = $('#areaJavaCode').text();
-
-  //String sendToEmailAddress = "-- receipient's e-mail address --";
-
 });
-
-
-

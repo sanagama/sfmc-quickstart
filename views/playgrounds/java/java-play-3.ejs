@@ -16,27 +16,31 @@
 
   <p class="mt-3">Let's create an advanced Java app in the <strong>Marketing Cloud SDK Playground</strong>. This app will connect to Marketing Cloud, send an e-mail to a contact you specify and check status of the e-mail.</p>
 
-  <p class="mt-3">Like in the earlier example, the Java app uses pre-provisioned API Keys (<code>Client ID</code> and <code>Client Secret</code>) from the <strong>Marketing Cloud SDK Playground</strong> environment to connect to Marketing Cloud.</p>
+  <p class="mt-3">Like before, this Java app uses pre-provisioned API Keys (<code>Client ID</code> and <code>Client Secret</code>) from the <strong>Marketing Cloud SDK Playground</strong> environment to connect to Marketing Cloud.</p>
   
   <div class="card mt-3">
     <div class="card-block">
       <div class="card-header text-white" style="background-color: #00AA9E;">Send a test e-mail with Marketing Cloud</div>
       <div class="card-body">
-        <h6 class="card-subtitle mb-3">Complete the 3 steps below to run this app in the playground.</h6>
+        <h6 class="card-subtitle mb-3">Complete the following steps to run the Java app in the playground.</h6>
         
-        <form>
+        <form id="frmRunApp2" action="/playgound-api/java/runapp2" method="post">
           <div class="form-group">
-              <p class="card-text"><mark>Step 1:</mark> Prove you're a human. We do this to protect you against spam and abuse.</p>
-              <div class="g-recaptcha m-3" data-sitekey="6Levl0UUAAAAAJFcKN0fYZBoulC2mmJslaCFyNlD"></div>
+            <p class="card-text"><mark>Step 1:</mark> Prove you're a human. We do this to protect this website against spam and abuse.</p>
+            <div class="g-recaptcha m-3" data-sitekey="6Levl0UUAAAAAJFcKN0fYZBoulC2mmJslaCFyNlD"></div>
+          </div>
 
-              <label for="inputEmail"><mark>Step 2:</mark> Enter the receipient's e-mail address. The app willl send a test e-mail to this address.</label>
-              <input required type="email" class="form-control" name="inputEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Recepient's email address (required)">
-              <small id="emailHelp" class="form-text text-muted">We never share your email with anyone. See <a href="https://trust.salesforce.com" target="_blank">https://trust.salesforce.com</a></small>
+          <div class="form-group">
+            <label for="inputEmail"><mark>Step 2:</mark> Enter the receipient's e-mail address.</label>
+            <input required type="email" class="form-control" name="inputEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Recepient's email address (required)">
+            <small id="emailHelp" class="form-text text-muted">This e-mail address is only used for testing purposes and never shared with anyone. See <a href="https://trust.salesforce.com" target="_blank">https://trust.salesforce.com</a></small>
+          </div>
 
-              <p class="card-text mt-3"><mark>Step 3:</mark> Click <strong>Compile and Run Java app</strong> to run the app in the playground and send the e-mail.</p>
-              <p class="card-text">Lines <code>10 and 11</code> in the code below use the <code>Client ID</code> and <code>Client Secret</code> from the <strong>Marketing Cloud SDK Playground</strong> environment. Line <code>12</code> uses your receipient's e-mail address.</p>
-                  
-              <button id="buttonRunApp2" class="btn btn-secondary" type="button">Compile and Run Java app</button>
+          <div class="form-group">
+            <p class="card-text"><mark>Step 3:</mark> Click <strong>Compile and Run Java app</strong> to run the app in the playground.</p>
+            <p class="card-text">Running the Java app will cause Marketing Cloud to send a <strong>test</strong> e-mail to the receipient you specified above.</p>
+            <p class="card-text">Lines <code>10 and 11</code> in the code below use the <code>Client ID</code> and <code>Client Secret</code> from the <strong>Marketing Cloud SDK Playground</strong> environment. Line <code>12</code> is updated with your receipient's e-mail address.</p>
+            <button id="buttonRunApp2" class="btn btn-secondary" type="submit">Compile and Run Java app</button>
           </div>
         </form>
           
@@ -45,7 +49,7 @@
         <div class="card mt-3">
           <div class="card-header"><small>CONSOLE OUTPUT</small></div>
           <pre style="max-height: 30em" class="m-2">
-            <code id="outputRunApp" class="language-bash">Nothing yet. Click 'Compile and Run Java App' to see results.</code>
+            <code id="outputRunApp" class="language-bash">Nothing yet. Complete the steps above to see results.</code>
           </pre>
         </div>
 

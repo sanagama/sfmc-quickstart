@@ -63,7 +63,7 @@ app.get('/playgound-api/java/createproject', function(req, res) {
 app.get('/playgound-api/java/runapp1', function(req, res) {
     javaPlayground.runApp1(req, res); });
     
-app.get('/playgound-api/java/runapp2', function(req, res) {
+app.post('/playgound-api/java/runapp2', function(req, res) {
     javaPlayground.runApp2(req, res); });
 
 module.exports = app;
