@@ -61,6 +61,8 @@ $(document).ready(function() {
       data: frm.serialize()
     }).done (function(data) {
 
+      grecaptcha.reset();
+
       $('#buttonRunApp2').removeClass('disabled');
       $('#successRunApp').removeClass('hide-element');
       $('#outputRunApp').css("text-decoration", "none");
