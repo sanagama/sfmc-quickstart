@@ -41,7 +41,7 @@ public class App
             }
             else
             {
-                System.out.println("** ERROR: could not create new e-mail:\n");
+                System.out.println("[ERROR] could not create new e-mail:\n");
                 throw new ETSdkException(emailResponse.toString());
             }
             
@@ -64,7 +64,7 @@ public class App
             }
             else
             {
-                System.out.println("** ERROR: could not create Triggered Send:\n");
+                System.out.println("[ERROR] could not create Triggered Send:\n");
                 throw new ETSdkException(sendResponse.toString());
             }
 
@@ -76,7 +76,7 @@ public class App
             }
             else
             {
-                System.out.println("** ERROR: could not activate Triggered Send:\n");
+                System.out.println("[ERROR] could not activate Triggered Send:\n");
                 throw new ETSdkException(sendResponse.toString());
             }
 
@@ -87,7 +87,7 @@ public class App
             }
             else
             {
-                System.out.println("** ERROR: could not send e-mail:\n");
+                System.out.println("[ERROR] could not send e-mail:\n");
                 throw new ETSdkException(sendResponse.toString());
             }
 
@@ -103,14 +103,14 @@ public class App
             }
             else
             {
-                System.out.println("** ERROR: could not get Sent Event response:\n" + sentEventResponse.toString());
+                System.out.println("[ERROR] could not get Sent Event response:\n" + sentEventResponse.toString());
             }
 
             System.out.println("\nAll done. Please check the Inbox of " + "'" + sendToEmailAddress + "'" + " for an e-mail from Marketing Cloud.");
         }
         catch(ETSdkException e)
         {
-            System.out.println("\n** Exception:\n" + e.toString());
+            System.out.println("\n[ERROR] Exception:\n" + e.toString());
         }
     }
 }

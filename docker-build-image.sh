@@ -8,7 +8,7 @@ docker rmi -f registry.heroku.com/sfmc-quickstart/web
 docker build . -t sanagama/sfmc-quickstart
 docker images
 
-# Test locaslly with the command below:
+# Test locally with the command below:
 #
 # docker run  -it --name 'sfmc-quickstart' -e 'SFMC_PLAYGROUND_CLIENTID=<CLIENTID>' \
 # -e 'SFMC_PLAYGROUND_CLIENTSECRET=<CLIENTSECRET>' \
