@@ -83,7 +83,7 @@ export default class JavaPlayground
         })
         .catch(function(errorCodes: any) {
           // invalid
-          res.send("** ERROR: CAPTCHA verification failed. No e-mail sent. Please complete step 3.1 and try again.");
+          res.send("[ERROR] " + recaptcha.translateErrors(errorCodes));
         });
     }
 }

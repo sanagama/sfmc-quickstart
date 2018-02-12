@@ -65,7 +65,7 @@ if [ $retVal -eq 0 ]; then
     echo "Successfully compiled Java Maven project in playground"
     echo $projectPath
 else
-    echo "** Error: An error occurred while compiling the project. Please reload this page and try again."
+    echo "[ERROR] An error occurred while compiling the project. Please reload this page and try again."
     exit $retVal
 fi
 
@@ -79,8 +79,7 @@ if [ $retVal -eq 0 ]; then
     echo "Successfully ran Java Maven project in playground"
     echo $projectPath
 else
-    echo "** Error: An error occurred while running the project. Please reload this page and truy again."
-    exit $retVal
+    echo "[ERROR] An error occurred while running the project. Please reload this page and truy again."
 fi
 
 exit $retVal

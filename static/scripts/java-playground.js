@@ -16,10 +16,14 @@ $(document).ready(function() {
     }).done (function (data) {
 
       $('#buttonCreateProject').removeClass('disabled');
-      $('#successCreateProject').removeClass('hide-element');
       $('#outputCreateProject').css("text-decoration", "none");
       $('#outputCreateProject').text(data);
 
+      // show 'congrats' message if there were no errors
+      if (data.indexOf("[ERROR]") == -1)
+      {
+        $('#successCreateProject').removeClass('hide-element');
+      }
     });
   });
 
@@ -42,7 +46,7 @@ $(document).ready(function() {
       $('#outputRunApp').text(data);
 
       // show 'congrats' message if there were no errors
-      if (data.indexOf("** Error") == -1)
+      if (data.indexOf("[ERROR]") == -1)
       {
         $('#successRunApp').removeClass('hide-element');
       }
@@ -73,7 +77,7 @@ $(document).ready(function() {
       $('#outputRunApp').text(data);
 
       // show 'congrats' message if there were no errors
-      if (data.indexOf("** Error") == -1)
+      if (data.indexOf("[ERROR]") == -1)
       {
         $('#successRunApp').removeClass('hide-element');
       }

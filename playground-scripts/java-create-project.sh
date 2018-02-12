@@ -6,13 +6,13 @@
 
 if [ -z "$1" ]
 then
-    echo "** Insufficient arguments passed - Exiting. Please supply a unique string (e.g. sessionId) for the project directory as the first parameter."
+    echo "[ERROR] Insufficient arguments passed - Exiting. Please supply a unique string (e.g. sessionId) for the project directory as the first parameter."
     exit 1
 fi
 
 if [ -z "$2" ]
 then
-    echo "** Insufficient arguments passed - Exiting. Please supply the path to the source pom.xml file as the second parameter."
+    echo "[ERROR] Insufficient arguments passed - Exiting. Please supply the path to the source pom.xml file as the second parameter."
     exit 1
 fi
 
@@ -40,20 +40,30 @@ fi
 
 #echo "Creating session playground directory: " $sessionPlaygroundPath
 mkdir -p $sessionPlaygroundPath
-
-#echo "Creating Maven project in: " $sessionPlaygroundPath
 cd $sessionPlaygroundPath
-#echo "Current directory = " `pwd`
 
 # Create Maven project
+#echo "Creating Maven project in: " $sessionPlaygroundPath
 mvn -q archetype:generate -B "-DgroupId=com.sfmcsamples" "-DartifactId=sfmc-java-sample" "-DarchetypeArtifactId=maven-archetype-quickstart" "-Dversion=1.0.0"
-
-# Copy over pom.xml
 retVal=$?
-if [ $? -eq 0 ]; then
-    #echo "Copying pom.xml to project directory"
-    cp $sourcePomXml $projectPath/pom.xml
+
+if [ $retVal -eq 0 ]; then
     echo "Successfully created Apache Maven project in the playground at:"
     echo $projectPath
+else
+    echo "[ERROR] An error occurred while creating Maven project in the playground. Please reload this page and try again."
+    exit $retVal
 fi
+
+# Copy pom.xml to project directory
+#echo "Copying pom.xml to project directory"
+cp $sourcePomXml $projectPath/pom.xml
+retVal=$?
+
+if [ $retVal -eq 0 ]; then
+    echo "Successfully copied pom.xml to Apache Maven project"
+else
+    echo "[ERROR] An error occurred while copying pom.xml to Apache Maven project. Please reload this page and try again."
+fi
+
 exit $retVal
