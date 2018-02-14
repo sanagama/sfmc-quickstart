@@ -51,9 +51,9 @@ cd $projectPath
 #echo "Current directory = " `pwd`
 
 # replace: "-- receipient e-mail address --" with $sendToEmailAddress
-echo "Updating receipient's e-mail address in App.Java to: " $sendToEmailAddress
 if [ -n "$sendToEmailAddress" ]
 then
+    echo "Updating receipient's e-mail address in App.Java to: " $sendToEmailAddress
     stringToReplace="-- receipient e-mail address --"
     sed -i -e "s/$stringToReplace/$sendToEmailAddress/g" $projectPath/src/main/java/com/sfmcsamples/App.java
 fi

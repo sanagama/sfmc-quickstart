@@ -57,8 +57,14 @@ app.get('/playgrounds/java/java-play-3', function(req, res) { res.render("playgr
 // TBD: add playground REST API routes
 const javaPlayground = new JavaPlayground(app);
 
-app.get('/playgound-api/java/createproject', function(req, res) {
-    javaPlayground.createProject(req, res); });
+app.get('/playgound-api/java/getstatus', function(req, res) {
+    javaPlayground.getStatus(req, res); });
+
+app.get('/playgound-api/java/clearstatus', function(req, res) {
+    javaPlayground.clearStatus(req, res); });
+        
+app.get('/playgound-api/java/newproject', function(req, res) {
+    javaPlayground.newProject(req, res); });
 
 app.get('/playgound-api/java/runapp1', function(req, res) {
     javaPlayground.runApp1(req, res); });

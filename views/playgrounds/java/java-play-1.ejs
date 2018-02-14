@@ -29,15 +29,16 @@
       <div class="card-body">
         <p class="card-text">Click <strong>Run Command</strong> to create a new Apache Maven project in the playground. </p>
         <pre style="max-height: 30em" data-src="/code-snippets/java/mvn-newproject.sh"></pre>
-        <button id="buttonCreateProject" class="btn btn-secondary" type="button">Run command</button>
+        <button id="buttonRun" class="btn btn-secondary" type="button" data-value1="/playgound-api/java/newproject" data-value2="GET" >Run command</button>
+
         <div class="card mt-3">
           <div class="card-header"><small>CONSOLE OUTPUT</small></div>
           <pre style="max-height: 30em" class="m-2">
-            <code id="outputCreateProject" class="language-bash">Nothing yet. Click 'Run Command' to see results.</code>
+            <code id="textRunOutput" class="language-bash">Nothing yet. Click 'Run Command' to see results.</code>
           </pre>
         </div>
 
-        <div id="successCreateProject" class="hide-element">
+        <div id="textSuccess" class="hide-element">
           <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new Apache Maven project in the playground!</p>
         </div>
       </div>

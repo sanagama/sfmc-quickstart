@@ -25,17 +25,16 @@
         <p class="card-text">Click <strong>Compile and Run Java app</strong> to run the app in the playground and test the connection to Marketing Cloud.</p>
 
         <p class="card-text">Lines <code>9 and 10</code> in the code below use the <code>Client ID</code> and <code>Client Secret</code> from the <strong>Marketing Cloud SDK Playground</strong> environment.</p>
-        
-        <button id="buttonRunApp" class="btn btn-secondary" type="button">Compile and Run Java app</button>
+        <button id="buttonRun" class="btn btn-secondary" type="button" data-value1="/playgound-api/java/runapp1" data-value2="GET">Compile and Run Java app</button>
         <pre style="max-height: 30em" class="line-numbers" data-line="9-10" data-src="/code-snippets/java/app1-playground.java"></pre>
           <div class="card mt-3">
             <div class="card-header"><small>CONSOLE OUTPUT</small></div>
             <pre style="max-height: 30em" class="m-2">
-              <code id="outputRunApp" class="language-bash">Nothing yet. Click 'Compile and Run Java App' to see results.</code>
+              <code id="textRunOutput" class="language-bash">Nothing yet. Click 'Compile and Run Java App' to see results.</code>
             </pre>
           </div>
 
-          <div id="successRunApp" class="hide-element">
+          <div id="textSuccess" class="hide-element">
             <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully compiled and run a simple Java app in the <strong>Marketing Cloud SDK Playground!</strong></p>
             <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You're ready to try an advanced Java app!</p>
           </div>

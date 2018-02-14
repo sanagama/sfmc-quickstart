@@ -1,55 +1,62 @@
 
 $(document).ready(function() {
 
-  // Java playground scripts - java-play-1
-  $('#buttonCreateProject').click(function() {
-
-    $('#buttonCreateProject').addClass('disabled');
-    $('#successCreateProject').addClass('hide-element');
-    $('#outputCreateProject').text('Running in playground, one moment...');
-    $('#outputCreateProject').css("text-decoration", "blink");
+  // update output area with status of running command for this session
+  function updateStatus() {
+    var getStatusEndpoint = '/playgound-api/java/getstatus';
+    var clearStatusEndpoint = '/playgound-api/java/clearstatus';
 
     $.ajax({
       type: "GET",
-      url: "/playgound-api/java/createproject",
+      url: getStatusEndpoint,
       dataType: "text"
     }).done (function (data) {
 
-      $('#buttonCreateProject').removeClass('disabled');
-      $('#outputCreateProject').css("text-decoration", "none");
-      $('#outputCreateProject').text(data);
+      $('#textRunOutput').text(data);
+      $('#textRunOutput').animate({scrollTop: $('#textRunOutput').prop("scrollHeight")}, 500);
 
-      // show 'congrats' message if there were no errors
-      if (data.indexOf("[ERROR]") == -1)
+      if (data.indexOf("[EXIT]") >= 0)
       {
-        $('#successCreateProject').removeClass('hide-element');
+        $('#buttonRun').removeClass('disabled');
+        $('#textRunOutput').removeClass('hide-element');
+
+        // show 'congrats' message if there were no errors
+        if (data.indexOf("[ERROR]") == -1)
+        {
+          $('#textSuccess').removeClass('hide-element');
+        }
+
+        // clear status from server
+        $.ajax({
+          type: "GET",
+          url: clearStatusEndpoint,
+          dataType: "text"
+        });
+      }
+      else
+      {
+        // poll endpoint every 1 second for status message
+        setTimeout(updateStatus, 1000);
       }
     });
-  });
+  }
+  
+  // onclick handler
+  $('#buttonRun').click(function(e) {
 
-  // Java playground scripts - java-play-2
-  $('#buttonRunApp').click(function() {
+    $('#buttonRun').addClass('disabled');
+    $('#textSuccess').addClass('hide-element');
+    $('#textRunOutput').text('Running in playground, one moment...');
 
-    $('#buttonRunApp').addClass('disabled');
-    $('#successRunApp').addClass('hide-element');
-    $('#outputRunApp').text('Running in playground, one moment...');
-    $('#outputRunApp').css("text-decoration", "blink");
+    var restEndpoint = $(this).data("value1"); // url
+    var restVerb = $(this).data("value2"); // verb
 
     $.ajax({
-      type: "GET",
-      url: "/playgound-api/java/runapp1",
+      type: restVerb,
+      url: restEndpoint,
       dataType: "text"
     }).done (function (data) {
-
-      $('#buttonRunApp').removeClass('disabled');
-      $('#outputRunApp').css("text-decoration", "none");
-      $('#outputRunApp').text(data);
-
-      // show 'congrats' message if there were no errors
-      if (data.indexOf("[ERROR]") == -1)
-      {
-        $('#successRunApp').removeClass('hide-element');
-      }
+      setTimeout(updateStatus(), 5000);
     });
   });
 
@@ -59,11 +66,10 @@ $(document).ready(function() {
     var frm = $('#frmRunApp2');
     e.preventDefault();
 
-    $('#buttonRunApp2').addClass('disabled');
-    $('#successRunApp').addClass('hide-element');
-    $('#outputRunApp').text('Running in playground, one moment...');
-    $('#outputRunApp').css("text-decoration", "blink");
-  
+    $('#buttonRun').addClass('disabled');
+    $('#textSuccess').addClass('hide-element');
+    $('#textRunOutput').text('Running in playground, one moment...');
+
     $.ajax({
       type: frm.attr('method'),
       url: frm.attr('action'),
@@ -71,16 +77,7 @@ $(document).ready(function() {
     }).done (function(data) {
 
       grecaptcha.reset();
-
-      $('#buttonRunApp2').removeClass('disabled');
-      $('#outputRunApp').css("text-decoration", "none");
-      $('#outputRunApp').text(data);
-
-      // show 'congrats' message if there were no errors
-      if (data.indexOf("[ERROR]") == -1)
-      {
-        $('#successRunApp').removeClass('hide-element');
-      }
+      setTimeout(updateStatus(), 5000);
     });
   });
 
