@@ -10,7 +10,8 @@ docker images
 
 # Test locally with the command below:
 #
-# docker run  -it --name 'sfmc-quickstart' -e 'SFMC_PLAYGROUND_CLIENTID=<CLIENTID>' \
+# docker run  -it --name 'sfmc-quickstart' 
+# -e 'SFMC_PLAYGROUND_CLIENTID=<CLIENTID>' \
 # -e 'SFMC_PLAYGROUND_CLIENTSECRET=<CLIENTSECRET>' \
 # -e 'SFMC_PLAYGROUND_RECAPTCHA_SECRET=<SECRET>' \
 # -e 'SFMC_PLAYGROUND_RECAPTCHA_SITEKEY=<SITEKEY>' -p 5000:5000 sanagama/sfmc-quickstart
