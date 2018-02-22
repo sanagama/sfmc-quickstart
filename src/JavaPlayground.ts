@@ -3,8 +3,6 @@
 import express = require("express");
 import path = require('path');
 import Utils = require('./utils');
-import shell = require('shelljs');
-import https = require('https');
 import * as childprocess from 'child_process';
 var reCAPTCHA = require('recaptcha2');
 

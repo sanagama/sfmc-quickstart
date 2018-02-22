@@ -22,7 +22,6 @@ app.set('view engine', 'ejs');
 var helmet = require('helmet')
 app.use(helmet());
 
-app.set('trust proxy', 1) // trust first proxy
 app.use(session({
     name: 'server-session-cookie-id',
     secret: 'sanagama copper',
@@ -38,23 +37,91 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../static")));
 app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
-// Routes
+//
+// Only allow access to IPs in 'SFMC_PLAYGROUND_VALID_IPS' environment variable if present.
+// Allow access to all IPs if 'SFMC_PLAYGROUND_VALID_IPS' environment variable is empty or undefined.
+//
+const CIDRRange = require('cidr-range'); //converter CIDR(s)
+var IPWhiteList = new Array<String>();
+if (app.get('env') === 'production') // heroku boots the app as production
+{
+    app.disable('x-powered-by');
+    app.disable('server');
+
+    let valid_ips = process.env.SFMC_PLAYGROUND_VALID_IPS;
+    if(valid_ips)
+    {
+        const CIDRs = valid_ips.split(',');
+        CIDRs.forEach(function(e)
+        {
+            if(e.indexOf('/') > -1)
+            {
+                //this is a CIDR
+                IPWhiteList = IPWhiteList.concat(CIDRRange(e));
+            }
+            else
+            {
+                //it's a straight IP
+                IPWhiteList.push(e);
+            }
+        });
+    }
+    // console.log("IP Whitelist = " + IPWhiteList.toString());
+
+    app.enable('trust-proxy');
+    app.set('trust-proxy', function(ip: string)
+    {
+        const address = ip;
+        if(!IPWhiteList.length)
+        {
+            return true;    // Allow access to all IPs if IP Whitelist is empty
+        }
+        else
+        {
+            return (IPWhiteList.indexOf(address) > -1 ? true : false);
+        }
+    });
+
+    app.all('*', function(req, res, next)
+    {
+        const host = (req.headers['x-forwarded-port'] === '443' ? ('https://' + req.headers.host) : false);
+        const ip = req.headers['x-forwarded-for'];
+        
+        if (!host || process.env.appURL !== host)
+        {
+            const allow = req.app.get('trust-proxy')(ip);
+            if (!allow)
+            {
+                console.log("** Access denied from IP: " + ip + ", host: " + host);
+                res.status(401).render("401");  // unauthorized'
+            }
+            else
+            {
+                next();
+            }
+        }
+        else
+        {
+            next();
+        }
+    });
+}
+
+// Routes: Home page
 app.get('/', function(req, res) { res.render("home"); });
+
+// Routes: Java quickstart pages
 app.get('/sdks/java/macos', function(req, res) { res.render("sdks/java/macos/java-mac-1"); });
 app.get('/sdks/java/macos/java-mac-2', function(req, res) { res.render("sdks/java/macos/java-mac-2"); });
 app.get('/sdks/java/macos/java-mac-3', function(req, res) { res.render("sdks/java/macos/java-mac-3"); });
-//app.get('/sdks/java/windows', function(req, res) { res.render("sdks/java/windows/java-windows-1"); });
+//TBD: app.get('/sdks/java/windows', function(req, res) { res.render("sdks/java/windows/java-windows-1"); });
 
+// Routes: Java playground pages
 app.get('/playgrounds/java', function(req, res) { res.render("playgrounds/java/java-play-1"); });
 app.get('/playgrounds/java/java-play-2', function(req, res) { res.render("playgrounds/java/java-play-2"); });
 app.get('/playgrounds/java/java-play-3', function(req, res) { res.render("playgrounds/java/java-play-3"); });
 
-// TBD: add more routes later
-//app.get('/apis/restapi', function(req, res) { res.render("apis/rest/restapi-1"); });
-//app.get('/apis/restapi-2', function(req, res) { res.render("apis/restapi-2"); });
-//app.get('/apis/soapapi', function(req, res) { res.render("apis/soapapi-1"); });
-
-// TBD: add playground REST API routes
+// Routes: Java playground REST API
 const javaPlayground = new JavaPlayground(app);
 
 app.get('/playgound-api/java/getstatus', function(req, res) {
