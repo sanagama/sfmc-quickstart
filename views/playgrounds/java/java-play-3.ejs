@@ -19,7 +19,7 @@
   <p class="mt-3">Like before, this Java app uses pre-provisioned API Keys (<code>Client ID</code> and <code>Client Secret</code>) from 
     the <strong>Marketing Cloud SDK Playground</strong> environment to connect to Marketing Cloud. Complete the steps below to compile and run the Java app in the playground.</p>
   
-  <form id="frmRunApp2" action="/playgound-api/java/runapp2" method="post">
+  <form id="formRunCommand" action="/playgound-api/java/runapp2" method="post">
 
     <!-- Step 1 -->
     <div class="card mt-3">
@@ -51,25 +51,23 @@
           <p class="card-text">Running the Java app will cause Marketing Cloud to send a <strong>test</strong> e-mail to the receipient you specified above.</p>
           <p class="card-text">Lines <code>10 and 11</code> in the code below use the <code>Client ID</code> and <code>Client Secret</code> from the <strong>Marketing Cloud SDK Playground</strong> environment. Line <code>12</code> is updated with your receipient's e-mail address.</p>
           <button id="buttonRun" class="btn btn-secondary" type="submit">Compile and Run Java app</button>
-          <pre id="playground-java-app2" style="max-height: 30em" class="line-numbers" data-line="10-11" data-src="/code-snippets/java/app2-playground.java"></pre>
-
+          <pre style="max-height: 30em" class="line-numbers" data-line="10-11" data-src="/code-snippets/java/app2-playground.java"></pre>
+          
           <div class="card mt-3">
             <div class="card-header"><small>CONSOLE OUTPUT</small></div>
             <pre style="max-height: 30em" class="m-2">
               <code id="textRunOutput" class="language-bash">Nothing yet. Complete the steps above to see results.</code>
             </pre>
           </div>
-            
+
+          <div id="textSuccess" class="hide-element">
+            <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;Congrats. You have sucessfully compiled and run an advanced Java app in the <strong>Marketing Cloud Playground!</strong></p>
+          </div>
+                  
         </div>
       </div>
     </div>
-
   </form>
-          
-  <div id="textSuccess" class="hide-element">
-    <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;Congrats. You have sucessfully compiled and run an advanced Java app in the <strong>Marketing Cloud Playground!</strong></p>
-  </div>
-
 </div>
 
 <% include ../../partials/footer.ejs %>

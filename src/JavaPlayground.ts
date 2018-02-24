@@ -10,40 +10,20 @@ export default class JavaPlayground
 {
     private static _requestStatusMap = new Map<string, string>();
     
-    constructor(app: express.Express)
-    {
-        this.initialize();
-    }
-    
-    private initialize(): void
-    {
-    }
-    
     /**
      * requestStatus: gets status message for session in 'req.session'
-     * Handles GET on: /playgound-api/java/getstatus'
+     * Handles GET on: /playgound-api/java/statustext'
      */
     public getStatus(req: express.Request, res: express.Response)
     {
         var sessionId = req.session.id;
         Utils.logDebug("getStatus called. SessionId = " + sessionId);
-        if(JavaPlayground._requestStatusMap.has(sessionId))
-        {
-            // send current status message for sessionId
-            Utils.logDebug("getStatus: Status message found for SessionId = " + sessionId);
-            res.send(JavaPlayground._requestStatusMap.get(sessionId))
-        }
-        else
-        {
-            // send 'Not Found'
-            Utils.logDebug("getStatus: 404: No status message found for SessionId = " + sessionId);
-            res.sendStatus(404);
-        }
+        res.send(this.getStatusMessage(sessionId));
     }
 
     /**
      * clearStatus: deletes an existing project in session's playground directory and runs Maven to create a new project
-     * Handles GET on: /playgound-api/java/clearstatus'
+     * Handles DELETE on: /playgound-api/java/statustext'
      */
     public clearStatus(req: express.Request, res: express.Response)
     {
@@ -51,58 +31,58 @@ export default class JavaPlayground
         Utils.logDebug("clearStatus called. SessionId = " + sessionId);
         if(JavaPlayground._requestStatusMap.has(sessionId))
         {
-            Utils.logDebug("clearStatus: Clearing status message found for SessionId = " + sessionId);
+            Utils.logDebug("clearStatus: Clearing status message for SessionId = " + sessionId);
             JavaPlayground._requestStatusMap.delete(sessionId);
-            res.sendStatus(200);
         }
         else
         {
-            // send 'Not Found'
-            Utils.logDebug("clearStatus: 404: No status message found for SessionId = " + sessionId);
-            res.sendStatus(404);
+            // status not found
+            Utils.logDebug("clearStatus: No status message found for SessionId = " + sessionId);
         }
+        res.sendStatus(202); // accepted
     }
-
-    
+   
     /**
      * createProject: runs Maven to create a new project for the given sessionId. Deletes an existing project first.
-     * Handles GET on: /playgound-api/java/createproject'
+     * Handles POST on: /playgound-api/java/createproject'
      */
     public newProject(req: express.Request, res: express.Response)
     {
+        var self = this;
         var sessionId = req.session.id;
-        Utils.logDebug("newProject called. SessionId = " + sessionId);
 
         // Set current status
-        JavaPlayground._requestStatusMap.set(sessionId, "newProject: request received\n");
+        Utils.logDebug("newProject called. SessionId = " + sessionId);
+        self.setStatusMessage(sessionId, "newProject: request received\n");
 
         // Get bash script to run + args
         var scriptToRun = path.join(__dirname,'../playground-scripts','java-new-project.sh');
         var pomXml = path.join(__dirname,'../static','code-snippets','java','mvn-pom.xml');
 
         // Run script async in a fork
-        this.runShellScript(sessionId, scriptToRun, [sessionId, pomXml]);
+        self.runShellScript(sessionId, scriptToRun, [sessionId, pomXml]);
         res.sendStatus(202); // accepted
     }
 
     /**
      * runApp1: runs the first simple Java app in the playground
-     * Handles GET on: /playgound-api/java/runapp1
+     * Handles POST on: /playgound-api/java/runapp1
      */
     public runApp1(req: express.Request, res: express.Response)
     {
+        var self = this;
         var sessionId = req.session.id;
-        Utils.logDebug("runApp1 called. SessionId = " + sessionId);
 
         // Set current status
-        JavaPlayground._requestStatusMap.set(sessionId, "Run app: request received\n");
+        Utils.logDebug("runApp1 called. SessionId = " + sessionId);
+        self.setStatusMessage(sessionId, "Run app: request received\n");
         
         // Get bash script to run + args
         var scriptToRun = path.join(__dirname,'../playground-scripts','java-run-project.sh');
         var appJava = path.join(__dirname,'../static','code-snippets','java','app1-playground.java');
         
         // Run script async in a fork
-        this.runShellScript(sessionId, scriptToRun, [sessionId, appJava]);
+        self.runShellScript(sessionId, scriptToRun, [sessionId, appJava]);
         res.sendStatus(202); // accepted
     }
 
@@ -114,22 +94,14 @@ export default class JavaPlayground
     {
         var self = this;
         var sessionId = req.session.id;
+
+        // Set current status
         Utils.logDebug("runApp2 called. SessionId = " + sessionId);
-
-        var recaptcha = new reCAPTCHA({
-            siteKey: process.env.SFMC_PLAYGROUND_RECAPTCHA_SITEKEY,
-            secretKey: process.env.SFMC_PLAYGROUND_RECAPTCHA_SECRET
-        });
-
-        // The code snippet below is based on: https://github.com/fereidani/recaptcha2
-        recaptcha.validate(req.body['g-recaptcha-response'])
-        .then(function() {
-            // validated and secure
-            Utils.logDebug("runApp2: CAPTCHA verified");
-
-            // Set current status
-            JavaPlayground._requestStatusMap.set(sessionId, "Run app: request received\n");
-            
+        self.setStatusMessage(sessionId, "Run app: request received\n");
+        
+        // Verify CAPTCHA
+        self.verifyCaptcha(req, res)
+        .then((result) => {
             // Get bash script to run + args
             var scriptToRun = path.join(__dirname,'../playground-scripts','java-run-project.sh');
             var appJava = path.join(__dirname,'../static','code-snippets','java','app2-playground.java');
@@ -137,38 +109,100 @@ export default class JavaPlayground
             
             // Run script async in a fork
             self.runShellScript(sessionId, scriptToRun, [sessionId, appJava, emailAddress]);
-            res.sendStatus(202); // accepted
         })
-        .catch(function(errorCodes: any) {
-          // invalid
-          res.send("[ERROR] " + recaptcha.translateErrors(errorCodes));
+        .catch((err) => {
+            Utils.logDebug("verifyCaptcha failed. Error: " + err);
+        });
+    
+        res.sendStatus(202); // accepted
+    }
+
+    /**
+     * verifyCaptcha: uses Google APIs to verify CAPTCHA
+     * The code snippet below is based on: https://github.com/fereidani/recaptcha2
+     */
+    private verifyCaptcha(req: express.Request, res: express.Response) : Promise<any>
+    {
+        var self = this;
+        var sessionId = req.session.id;
+        Utils.logDebug("verifyCaptcha called. SessionId = " + sessionId);
+
+        return new Promise<any>((resolve, reject) =>
+        {
+            self.appendToStatusMessage(sessionId, "Verifying CAPTCHA\n");
+
+            var recaptcha = new reCAPTCHA({
+                siteKey: process.env.SFMC_PLAYGROUND_RECAPTCHA_SITEKEY,
+                secretKey: process.env.SFMC_PLAYGROUND_RECAPTCHA_SECRET
+            });
+    
+            recaptcha.validate(req.body['g-recaptcha-response'])
+            .then((result: any) => {
+                // CAPTCHA verified
+                Utils.logDebug("verifyCaptcha: CAPTCHA verified. SessionId = " + sessionId);
+                self.appendToStatusMessage(sessionId, "CAPTCHA verified\n");
+                resolve(true);
+            })
+            .catch((errorCode: any) => {
+              // CAPTCHA invalid
+              self.appendToStatusMessage(sessionId, "[ERROR] Please complete Step 3.1: Pass CAPTCHA check." );
+              reject(errorCode);
+            });
         });
     }
     
+   /**
+     * appendToStatusMessage: appends the given message to status for the given sessionId
+     */
+    private appendToStatusMessage(sessionId: string, newMessage: string)
+    {
+        var message = this.getStatusMessage(sessionId) + newMessage;
+        this.setStatusMessage(sessionId, message);
+    }
+
+    /**
+     * getStatusMessage: appends the given message to status for the given sessionId
+     */
+    private getStatusMessage(sessionId: string): string
+    {
+        if(JavaPlayground._requestStatusMap.has(sessionId))
+        {
+            // send current status message for sessionId
+            return JavaPlayground._requestStatusMap.get(sessionId);
+        }
+        else
+        {
+            // send back an empty string
+            Utils.logDebug("getStatusMessage: No status message found for SessionId = " + sessionId);
+            return "";
+        }
+    }
+    
+    /**
+     * setStatusMessage: sets the given message to status for the given sessionId
+     */
+    private setStatusMessage(sessionId: string, message: string)
+    {
+        JavaPlayground._requestStatusMap.set(sessionId, message);
+    }
+
     /**
      * runShellScript: runs the specified shell script asychronously in a fork
      */
     private runShellScript(sessionId: string, scriptToRun: string, args: string[])
     {
+        var self = this;
         Utils.logDebug("runShellScript called. SessionId = " + sessionId);
         
         // run script async in a new process
         var child = childprocess.spawn(scriptToRun, args, {shell: true});
 
         child.stdout.on('data', function(data: any) {
-            //Utils.logDebug("runShellScript: received data from shell script");
-
-            let statusMessage = JavaPlayground._requestStatusMap.get(sessionId);
-            statusMessage += data;
-            JavaPlayground._requestStatusMap.set(sessionId, statusMessage);
+            self.appendToStatusMessage(sessionId, data);
         });
 
         child.on('close', function() {
-            //Utils.logDebug("runShellScript: shell script exited");
-
-            let statusMessage = JavaPlayground._requestStatusMap.get(sessionId);
-            statusMessage += "\n[EXIT]: playground run complete";
-            JavaPlayground._requestStatusMap.set(sessionId, statusMessage);
+            self.appendToStatusMessage(sessionId, "\n[EXIT]: playground run complete");
         });        
     }
 }

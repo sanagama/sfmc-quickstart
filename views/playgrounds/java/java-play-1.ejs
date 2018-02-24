@@ -22,33 +22,34 @@
 
   <p class="mt-3">Let's start by creating an empty <a href="https://maven.apache.org" target="_blank">Apache Maven</a> project in the playground.</p>
   
-  <!-- Step 1 -->
-  <div class="card mt-3">
-    <div class="card-block">
-      <div class="card-header text-white" style="background-color: #00AA9E;">Create a new Apache Maven project in the playground</div>
-      <div class="card-body">
-        <p class="card-text">Click <strong>Run Command</strong> to create a new Apache Maven project in the playground. </p>
-        <pre style="max-height: 30em" data-src="/code-snippets/java/mvn-newproject.sh"></pre>
-        <button id="buttonRun" class="btn btn-secondary" type="button" data-value1="/playgound-api/java/newproject" data-value2="GET" >Run command</button>
+  <form id="formRunCommand" action="/playgound-api/java/newproject" method="post">
+  
+    <div class="card mt-3">
+      <div class="card-block">
+        <div class="card-header text-white" style="background-color: #00AA9E;">Create a new Apache Maven project in the playground</div>
+        <div class="card-body">
+          <p class="card-text">Click <strong>Run Command</strong> to create a new Apache Maven project in the playground. </p>
+          <pre style="max-height: 30em" data-src="/code-snippets/java/mvn-newproject.sh"></pre>
+          <button id="buttonRun" class="btn btn-secondary" type="submit">Run command</button>
+          
+          <div class="card mt-3">
+            <div class="card-header"><small>CONSOLE OUTPUT</small></div>
+            <pre style="max-height: 30em" class="m-2">
+              <code id="textRunOutput" class="language-bash">Nothing yet. Click 'Run Command' to see results.</code>
+            </pre>
+          </div>
 
-        <div class="card mt-3">
-          <div class="card-header"><small>CONSOLE OUTPUT</small></div>
-          <pre style="max-height: 30em" class="m-2">
-            <code id="textRunOutput" class="language-bash">Nothing yet. Click 'Run Command' to see results.</code>
-          </pre>
-        </div>
-
-        <div id="textSuccess" class="hide-element">
-          <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new Apache Maven project in the playground!</p>
+          <div id="textSuccess" class="hide-element">
+            <p class="card-text mt-3"><span class="fa fa-star text-success"></span>&nbsp;You have sucessfully created a new Apache Maven project in the playground!</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
+  </form>
 </div>
 
 <div class="container text-center">
-  <a class="btn btn-primary btn-md m-4 button-fixed-width-300 active" style="text-align:center" href="/playgrounds/java/java-play-2">Go to step 2</a>
+  <a id="buttonNextStep" class="btn btn-primary btn-md m-4 button-fixed-width-300 hide-element" style="text-align:center" href="/playgrounds/java/java-play-2">Go to step 2</a>
 </div>
 
 <% include ../../partials/footer.ejs %>

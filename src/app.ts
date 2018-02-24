@@ -122,18 +122,18 @@ app.get('/playgrounds/java/java-play-2', function(req, res) { res.render("playgr
 app.get('/playgrounds/java/java-play-3', function(req, res) { res.render("playgrounds/java/java-play-3"); });
 
 // Routes: Java playground REST API
-const javaPlayground = new JavaPlayground(app);
+const javaPlayground = new JavaPlayground();
 
-app.get('/playgound-api/java/getstatus', function(req, res) {
+app.get('/playgound-api/java/statustext', function(req, res) {
     javaPlayground.getStatus(req, res); });
 
-app.get('/playgound-api/java/clearstatus', function(req, res) {
+app.delete('/playgound-api/java/statustext', function(req, res) {
     javaPlayground.clearStatus(req, res); });
         
-app.get('/playgound-api/java/newproject', function(req, res) {
+app.post('/playgound-api/java/newproject', function(req, res) {
     javaPlayground.newProject(req, res); });
 
-app.get('/playgound-api/java/runapp1', function(req, res) {
+app.post('/playgound-api/java/runapp1', function(req, res) {
     javaPlayground.runApp1(req, res); });
     
 app.post('/playgound-api/java/runapp2', function(req, res) {
