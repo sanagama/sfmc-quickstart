@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../partials/header.ejs %>
+  <% include ../../partials/nav-tutorials.ejs %>
+
+</head>
+
+<body>
+  <% include ../../partials/header-tutorial-txn-steps.ejs %>
+
+    <!-- Tutorial steps -->
+    <div class="container">
+
+      <p class="mt-3">In this section you will create a transactional email message that use the <strong> NEW </strong> marketing cloud.
+        <a href="https://sfmc-txn-msg-api-214.herokuapp.com/" target="_blank">messaging APIs</a>.</p>
+      <p class="mt-3">The following creates a authorization token to the Marketing Cloud account by creating a
+        <code>Client ID</code> and
+        <code>Client Secret</code>, creates a simple email template, creates a transactional definition, sends a transactional e-mail to a contact and checks status of
+        the e-mail.</p>
+
+      <!-- Step 1 -->
+      <div class="card mt-3">
+        <div class="card-block">
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.1: Get an API key for Marketing Cloud</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">You need an API key to use the Marketing Cloud Java SDK.</h6>
+            <p class="card-text">Follow instructions at
+              <a href="https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-getting-started.meta/mc-getting-started/get-api-key.htm"
+                target="_blank">Get an API key</a> to get the
+              <code>Client ID</code> and
+              <code>Client Secret</code> for your Marketing Cloud account.</p>
+            <p class="card-text">
+              <span class="fa fa-exclamation text-warning"></span>&nbsp;You will need your
+              <code>Client ID</code> and
+              <code>Client Secret</code> in the next step.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="card mt-3">
+        <div class="card-block">
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 1.2: Create content</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">Create an email in Content Builder if you do not already have one.</h6>
+            <p class="card-text">To do this, follow the instructions
+              <a href="https://help.salesforce.com/articleView?id=mc_ceb_content_builder.htm&amp;type=5">here</a>.
+            </p>        
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>

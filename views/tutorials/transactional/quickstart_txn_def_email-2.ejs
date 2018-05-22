@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../partials/header.ejs %>
+  <% include ../../partials/nav-tutorials.ejs %>
+
+</head>
+
+<body>
+  <% include ../../partials/header-tutorial-txn-steps.ejs %>
+
+<!-- Tutorial steps -->
+<div class="container">
+
+  <p class="mt-3">Now that you've completed the necessary steps to integrate with the API, let's build out our transactional email API object
+    known as a definition </p>
+
+  <!-- Step 1 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.1: Create a transactional send definition</div>
+      <div class="card-body">
+        <p class="card-text">
+          To begin, go to
+          <code>Email Studio > Interactions > Triggered Sends</code> to create a
+          <strong>Triggered Send Definition</strong>. The necessary
+        </p>
+        <p>In this example, we will give the
+          <strong>Triggered Send Definition</strong> a basic and shared name, external_key, description --
+          <code>mydefinition</code>.</p>
+          </p>Use a send classification
+          of type
+          <code>transactional</code>.</p>
+        <p>Skip down to the
+          <strong>Content</strong> section and find your email under
+          <code>Content Builder</code>. You can override the
+          <strong>Subject Line</strong> in the template by providing on below the content selection box. Let’s call it
+          <code>My First Transactional Message</code>.</p>
+        <p>Under
+          <strong>Lists</strong> select
+          <code>All Subscribers</code> and ensure
+          <code>Add subscribers to this list</code> is selected (you’ll get an error otherwise.)</p>
+        <p>
+          <img src="https://imgur.com/a/NyAgfU3">
+        </p>
+        <p>That’s it. You can skip the remaining sections. Scroll back up to the top of the edit window and click “Save.”</p>
+        <p>At the send definitions menu, select your new definition and click the Play/Resume button to active the defintion.</p>
+
+        <p class="card-text">
+          <span class="fa fa-thumbs-up text-success"></span>&nbsp;You have successfully created a new empty Maven project for your Java app.</p>
+      </div>
+    </div>
+  </div>
+      <!-- Step 2 -->
+      <div class="card mt-3">
+        <div class="card-block">
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.2: Upgrade the transactional send definition</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">The next step is to upgrade the created definition to use the new RESTful HTTP service</h6>
+
+            <p class="card-text">
+              You'll need the following attributes from the prior steps 
+              <code>definitionKey</code>, 
+              <code>clientSecret</code>, 
+              <code>clientId</code>.
+            </p>
+
+            <p class="card-text">Run the following to get an authorization token</p>
+            <pre class="command-line" data-line="3-4" data-src="/code-snippets/tutorials/curl-auth-request.sh"></pre>
+
+            <p class="card-text">Run the command below in a Terminal window to upgrade your definition route</p>
+            <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-patch-def.sh"></pre>
+
+            <p class="card-text">
+              <span class="fa fa-star text-success"></span>&nbsp;You have successfully upgraded your triggered definition to use the NEW transactional messaging APIs!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="card mt-3">
+        <div class="card-block">
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.3: Send a message</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">The next step is to send an email to a recipient against a definition</h6>
+      
+            <p class="card-text">
+              You'll need the following attributes from the prior steps
+              <code>definitionKey</code>, 
+              <code>authorization token</code>, 
+              <code>recipient email address</code>, 
+              <code>recipient email address</code>.
+
+            </p>
+            <p class="card-text">Run the command below in a Terminal window to upgrade send an email.</p>
+            <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-post-txn-email.sh"></pre>
+            <p class="card-text">Copy the <code>messageKey</code> from the response and use it as path parameter for the next request.</p>
+
+            <p class="card-text">Again,in the Terminal window, run the following to get the status of that send.</p>
+            <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-status-messageKey.sh"></pre>
+      
+            <p class="card-text">
+              <span class="fa fa-star text-success"></span>&nbsp;Congrats! You have just sent an email and verified it's disposition using the NEW transactional messaging APIs!</p>
+            <p class="card-text"><span class="fa-lightbulb-o"></span>To try other capabilities of the API, you can read the <a><href="https://sfmc-txn-msg-api-214.herokuapp.com/">swagger spec</href></a>.</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>
