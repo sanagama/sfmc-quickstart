@@ -1,5 +1,5 @@
 ## Send - Email Addr
-curl -X "POST" "https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/mydefinition/send" \
+curl -X "POST" "https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/{definitionKey}/send" \
      -d $'{
         "to": [
           {
