@@ -64,3 +64,5 @@ typings/
 
 # dotenv environment variables file
 .env
+sfmc-quickstart.code-workspace
+views/tutorials/transactional/quickstart_email.md
