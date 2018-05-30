@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../partials/header.ejs %>
+  <% include ../../partials/brand.ejs %>
+  <% include ../../partials/nav-tutorials.ejs %>
+</head>
+
+<body>
+  <% include ../../partials/header-tutorial-txn-steps.ejs %>
+
+<!-- Tutorial steps -->
+<div class="container">
+
+  <p class="mt-3">Now that you've completed the necessary steps to integrate with the API, let's build out our transactional email API object
+    known as a definition </p>
+
+  <!-- Step 1 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.1: Create a transactional send definition</div>
+      <div class="card-body">
+        <p class="card-text">
+          To begin, go to
+          <code>Email Studio > Interactions > Triggered Sends</code> to create a
+          <strong>Triggered Send Definition</strong>. 
+        </p>
+        <p>In this example, we will give the
+          <strong>Triggered Send Definition</strong> a simple, shared convention for
+          <code>name, external_key, description</code>.  
+        <p><span class="fa fa-lightbulb-o text-success"></span>&nbsp;<strong>NOTE: </strong><code>external_key</code> will be used for <code>definitionKey</code> in the API path parameter.</p>
+          </p>Select a send classification
+          of type
+          <strong>transactional</strong>. Then skip down to the
+          <strong>Content</strong> section and find your email under
+          <strong>content builder</strong>.</p>
+        <p>Under
+          <strong>Lists</strong> select
+          <strong>All Subscribers</strong> and ensure
+          <strong>Add subscribers to this list</strong> is selected (you’ll get an error otherwise.)</p>
+        <p>
+          <img src="https://i.imgur.com/JgcyvFY.gif">
+        </p>
+        <p>That’s it! You can skip the remaining sections. Scroll back up to the top of the edit window and click “Save.”</p>
+        <p>At the send definitions menu, select your new definition and click the Play/Resume button to active the definition.</p>
+
+        <p class="card-text">
+          <span class="fa fa-thumbs-up text-success"></span>&nbsp;Nice work on creating a transactional send definition. Time to move into the code.</p>
+      </div>
+    </div>
+  </div>
+      <!-- Step 2 -->
+      <div class="card mt-3">
+        <div class="card-block">
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.2: Upgrade the transactional send definition</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">The next step is to upgrade the created definition to use the new RESTful HTTP service</h6>
+
+            <p class="card-text">
+              You'll need the following attributes from the prior steps 
+              <ul>
+                <li><code>definitionKey</code> same as <code>external_key</code></li>
+                <li><code>clientSecret</code></li>
+                <li><code>clientId</code></li>
+              </ul>
+            </p>
+
+            <p class="card-text">Run the following to get an authorization token, replacing with your <code>clientId</code> and <code>clientSecret</code> </p>
+            <pre class="command-line" data-line="3-4" data-src="/code-snippets/tutorials/curl-auth-request.sh"></pre>
+
+            <p class="card-text">Run the command below in a Terminal window to upgrade your definition route, using your <code>Authorization:Bearer</code> in the header and your
+            <code>definitionKey</code> in the URL.</p>
+            <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-patch-def.sh"></pre>
+
+            <p class="card-text">
+              <span class="fa fa-star text-success"></span>&nbsp;You have successfully upgraded your triggered definition to use the <strong>NEW</strong> transactional messaging APIs!</p>
+          </div>
+        </div>
+      </div>
+
+    <% include ../../partials/footer.ejs %>
+
+</body>
+
+</html>

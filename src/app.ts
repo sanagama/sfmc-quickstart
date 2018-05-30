@@ -110,6 +110,12 @@ if (app.get('env') === 'production') // heroku boots the app as production
 // Routes: Home page
 app.get('/', function(req, res) { res.render("home"); });
 
+// Routes: Tutorials
+app.get('/tutorials/transactional', function(req, res) { res.render("tutorials/transactional/quickstart_txn_def_email"); });
+app.get('/tutorials/transactional/quickstart_txn_def_email-2', function (req, res) { res.render("tutorials/transactional/quickstart_txn_def_email-2"); });
+app.get('/tutorials/transactional/quickstart_txn_def_email-3', function (req, res) { res.render("tutorials/transactional/quickstart_txn_def_email-3"); });
+
+
 // Routes: Java quickstart pages
 app.get('/sdks/java/macos', function(req, res) { res.render("sdks/java/macos/java-mac-1"); });
 app.get('/sdks/java/macos/java-mac-2', function(req, res) { res.render("sdks/java/macos/java-mac-2"); });

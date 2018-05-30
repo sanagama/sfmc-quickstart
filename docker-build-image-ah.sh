@@ -2,10 +2,10 @@
 
 set -x
 
-docker rmi -f sanagama/sfmc-quickstart
-docker rmi -f registry.heroku.com/sfmc-quickstart/web
+docker rmi -f allenhoem/sfmc-quickstart
+#docker rmi -f registry.heroku.com/sfmc-quickstart/web
 
-docker build . -t sanagama/sfmc-quickstart
+docker build . -t allenhoem/sfmc-quickstart
 docker images
 
 # Test locally with the command below:
