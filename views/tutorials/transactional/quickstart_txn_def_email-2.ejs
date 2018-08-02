@@ -5,11 +5,48 @@
   <% include ../../partials/header.ejs %>
   <% include ../../partials/brand.ejs %>
   <% include ../../partials/nav-tutorials.ejs %>
+
 </head>
 
 <body>
-  <% include ../../partials/header-tutorial-txn-steps.ejs %>
 
+    
+    <script>
+      function getAuth() {
+        console.log("'Attempting to commnunicate with server");
+        var id = document.getElementById("clientId").value;
+        var secret = document.getElementById('clientSecret').value;
+        var key = document.getElementById("externalKey").value;
+        var token;
+        document.getElementById("PostRunOutput").innerHTML = 'curl -X \"POST\" \"https://auth-qa1s1.exacttargetapis.com/v1/requestToken\" -H \'Content-Type: application/x-www-form-urlencoded; charset=utf-8\' --data-urlencode ' + "\'clientId= " + id + "\' --data-urlencode \'clientSecret= " + secret +"\'";
+        document.getElementById("PatchRunOutput").innerHTML = 'curl -X \"PATCH\" \"https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/' + key + "\"" + ' -d $\'{}\' -H \'Content-Type: application/json\' -H \'Authorization: Bearer ' + token + "\'";
+       $.ajax( {
+         url: '/getauth',
+         type: 'POST',
+         contentType: 'application/json; charset=utf-8',
+         data: JSON.stringify({ clientId: id, clientSecret: secret, externalKey: document.getElementById('externalKey').value }),
+         success: function(response) {console.log(response); token = response; document.getElementById("token").innerHTML = response;
+         sessionStorage.setItem('oAuth', token);
+         definitionKey = document.getElementById("externalKey");
+         sessionStorage.setItem('definitionKey', key);
+         doPATCH(token, key);
+        }
+       });
+       console.log("Communication attempt ended");
+       token = document.getElementById("token").innerHTML;
+      };
+      function doPATCH(token, key) {
+        $.ajax({
+         url: '/patch',
+         type: 'POST',
+         contentType: 'application/json; charset=utf-8',
+         data: JSON.stringify({authToken: token, externalKey: key}),
+         success:function(response) { console.log(response);}
+       });
+      };
+    </script>
+
+  <% include ../../partials/header-tutorial-txn-steps.ejs %>
 <!-- Tutorial steps -->
 <div class="container">
 
@@ -50,33 +87,74 @@
       </div>
     </div>
   </div>
-      <!-- Step 2 -->
+  <!-- Step 2 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color:#00AA9E;">Step 2.2: Provide Necessary Info to Get an Authorization Token and Upgrade Definition Route</div>
+      <div class="card-body">
+        <input type="text" placeholder="Client Id" id="clientId" size='43'>
+        <input type="text" placeholder="Client Secret" id="clientSecret" size='43'>
+        <input type="text" placeholder="Definition Key (same as External Key)" id="externalKey" size='43'>
+      </div>
+    </div>
+  </div>
+
+     
+     
+      <!-- Step 3 -->
       <div class="card mt-3">
         <div class="card-block">
-          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.2: Upgrade the transactional send definition</div>
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.3: Upgrade the transactional send definition</div>
           <div class="card-body">
             <h6 class="card-subtitle mb-3">The next step is to upgrade the created definition to use the new RESTful HTTP service</h6>
 
             <p class="card-text">
-              You'll need the following attributes from the prior steps 
+              The attributes provided in the previous step will be used to complete this. 
               <ul>
                 <li><code>definitionKey</code> same as <code>external_key</code></li>
                 <li><code>clientSecret</code></li>
                 <li><code>clientId</code></li>
               </ul>
-            </p>
+            </p> 
 
             <p class="card-text">Run the following to get an authorization token, replacing with your <code>clientId</code> and <code>clientSecret</code> </p>
             <pre class="command-line" data-line="3-4" data-src="/code-snippets/tutorials/curl-auth-request.sh"></pre>
 
             <p class="card-text">Run the command below in a Terminal window to upgrade your definition route, using your <code>Authorization:Bearer</code> in the header and your
             <code>definitionKey</code> in the URL.</p>
-            <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-patch-def.sh"></pre>
-
-            <p class="card-text">
-              <span class="fa fa-star text-success"></span>&nbsp;You have successfully upgraded your triggered definition to use the <strong>NEW</strong> transactional messaging APIs!</p>
-          </div>
+            <pre id="replacement" class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-patch-def.sh">Help</pre>
+            
+          <button onclick='getAuth()'>Personalize Commands</button>
+            </div>
         </div>
+      </div>
+            <div class="card mt-3">
+              <div class="card-header"><small>PERSONALIZED POST COMMAND</small></div>
+              <pre style="max-height: 30em" class="m-2">
+                <code id="PostRunOutput" class="language-bash">Nothing yet. Click 'Personalize Commands' to see results.</code>
+              </pre>
+            </div>
+            <div class="card mt-3">
+              <div class="card-header"><small>PERSONALIZED PATCH COMMAND</small></div>
+              <pre style="max-height: 30em" class="m-2">
+                <code id="PatchRunOutput" class="language-bash">Nothing yet. Click 'Personalize Commands' to see results.</code>
+              </pre>
+            </div>
+  <!-- Step 4 -->
+  <div class="card mt-3">
+    <div class="card-block">
+      <div class="card-header text-white" style="background-color:#00AA9E;">Step 2.4: Copy Your Newly Generated Authorization Token to be Used in the Next Section</div>
+      <div class="card-body">
+        <p class ="card-text" id='token'>
+            <span></span>Your token will appear here.</p>
+        <p class="card-text">
+          <span class="fa fa-star text-success"></span>&nbsp;You have successfully upgraded your triggered definition to use the <strong>NEW</strong> transactional messaging APIs!</p>
+      </div>
+    </div>
+  </div>
+
+      <div class="container text-center">
+        <a id="buttonNextStep" class="btn btn-primary btn-md m-4 button-fixed-width-300 active" style="text-align:center" href="/tutorials/transactional/quickstart_txn_def_email-3">Go to step 3</a>
       </div>
 
     <% include ../../partials/footer.ejs %>

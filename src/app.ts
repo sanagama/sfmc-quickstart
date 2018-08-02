@@ -6,6 +6,8 @@ import * as path from "path";
 import * as favicon from "serve-favicon";
 import * as session from "express-session";
 import JavaPlayground from './JavaPlayground';
+var request = require("request");
+var http = require("http");
 
 const PORT = process.env.PORT || 5000
 
@@ -35,6 +37,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../static")));
+app.use(express.static(path.join(__dirname, 'tutorial-scripts')));
 app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
 //
@@ -114,7 +117,7 @@ app.get('/', function(req, res) { res.render("home"); });
 app.get('/tutorials/transactional', function(req, res) { res.render("tutorials/transactional/quickstart_txn_def_email"); });
 app.get('/tutorials/transactional/quickstart_txn_def_email-2', function (req, res) { res.render("tutorials/transactional/quickstart_txn_def_email-2"); });
 app.get('/tutorials/transactional/quickstart_txn_def_email-3', function (req, res) { res.render("tutorials/transactional/quickstart_txn_def_email-3"); });
-
+app.get('./tutorial-scripts/get-auth-token.ts', function(req, res) { res.sendFile('get-auth-token.ts'); });
 
 // Routes: Java quickstart pages
 app.get('/sdks/java/macos', function(req, res) { res.render("sdks/java/macos/java-mac-1"); });
@@ -126,6 +129,7 @@ app.get('/sdks/java/macos/java-mac-3', function(req, res) { res.render("sdks/jav
 app.get('/playgrounds/java', function(req, res) { res.render("playgrounds/java/java-play-1"); });
 app.get('/playgrounds/java/java-play-2', function(req, res) { res.render("playgrounds/java/java-play-2"); });
 app.get('/playgrounds/java/java-play-3', function(req, res) { res.render("playgrounds/java/java-play-3"); });
+
 
 // Routes: Java playground REST API
 const javaPlayground = new JavaPlayground();
@@ -145,4 +149,61 @@ app.post('/playgound-api/java/runapp1', function(req, res) {
 app.post('/playgound-api/java/runapp2', function(req, res) {
     javaPlayground.runApp2(req, res); });
 
+//app.post('tutorial-scripts/get-auth-token', )
+// attempting to POST to get OAuth key
+
+app.post('/getauth', function(req, res){
+    var oAuth = '';
+    request.post('https://auth-qa.exacttargetapis.com/v1/requesttoken',
+                {json: {clientId: req.body.clientId, clientSecret: req.body.clientSecret}},
+                function(error, response, body) {
+                    if(!error && response.statusCode == 200) {
+                        res.send(body.accessToken);
+                    }
+                }
+                );
+
+    });
+
+// PATCH route
+app.post('/patch', function(req, res) {
+    var token = req.body.authToken;
+    var key = req.body.externalKey;
+    var payload = JSON.stringify({name: "New Route Test", contentId: "3cb82d6a-d54b-4ba3-8ba3-76a138ee819c", description: "Testing your triggered send!"});
+    request.patch({url: "https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/" + key,
+                    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
+                    body: payload}, function(error, response, body){ res.send(body); });
+});
+
+    // POST to complete triggered send
+    app.post('/send', function(req, res) {
+        var payload = JSON.stringify({
+            to: [
+                  {
+                    emailAddress: req.body.to[0].emailAddress,
+                    messageKey: req.body.to[0].messageKey,
+                    subscriberKey: req.body.to[0].subscriberKey,
+                    attributes: {
+                        SubAttrName1: "SubAttrValue1"
+                    }
+                  }
+                ],
+                attributes: {
+                    ReqAttrName1: "ReqAttrValue1"
+                }
+            });
+        request.post({url:'https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/' + req.body.to[0].definitionKey + '/send',
+                    body: payload,
+                    headers: {'Authorization': 'Bearer ' + req.body.to[0].accessToken, 'Content-Type': 'application/json'}},
+                    function(error, response, body) {
+                        //res.send(response);
+                        if(!error && response.statusCode == 202) {
+                            res.send(body);
+                        }
+                        else {
+                            res.send(body);
+                        } 
+                    } 
+        );//.auth(null, null, true, req.body.to[0].accessToken);
+    });
 module.exports = app;

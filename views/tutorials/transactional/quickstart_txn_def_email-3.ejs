@@ -6,20 +6,74 @@
   <% include ../../partials/brand.ejs %>
   <% include ../../partials/nav-tutorials.ejs %>
 </head>
-
 <body>
   <% include ../../partials/header-tutorial-txn-steps.ejs %>
+  <script>
+    function send() {
+      console.log("Attempting to complete a triggered send");
+      var email = document.getElementById("subscriberEmail").value;
+      var subscriberKey = document.getElementById("subscriberKey").value;
+      var token = sessionStorage.getItem('oAuth');
+      var definitionKey = sessionStorage.getItem('definitionKey');
+      console.log(email);
+      console.log(subscriberKey);
+      var mKey = Math.floor(Math.random() * 1000000000) + "";
+      console.log(mKey);
+      document.getElementById("SendRunOutput").innerHTML = 'curl -X \"POST\" \"https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/definition/' + definitionKey + '/send\" -d $\'\{"to\": \[\{\"subscriberKey\": \"' + subscriberKey + '\"\,\"emailAddress\": \"' + email + '\"\,\"messageKey\": \"' + mKey + '\"\} \]\}\' \-H \'Content-Type: application/json\' -H \'Authorization: Bearer ' + token + "\'";
+      document.getElementById("CheckRunOutput").innerHTML = 'curl \"https://www-qa1.exacttargetapis.com/transactionalmessages/v1/email/messageKey/' + mKey + '/status\" -H \'Content-Type: application/json\' -H \'Authorization: Bearer ' + token +'\'';
+      var payload = JSON.stringify({
+        to: [
+              {
+                emailAddress: email,
+                messageKey: mKey,
+                subscriberKey: subscriberKey,
+                definitionKey: definitionKey,
+                accessToken: token,
+                attributes: {
+                    SubAttrName1: "SubAttrValue1",
+                }
+              }
+            ],
+            attributes: {
+                ReqAttrName1: "ReqAttrValue1"
+            }
+        });
+        console.log(payload);
+      $.ajax ( {
+        url: '/send',
+        type: "POST",
+        contentType: 'application/json',
+        //Authorization: 'Bearer ' + token,
+        data: payload,
+        success: function(response) {
+          console.log(response);
+        }
+      }
 
+      )
+    }
+  </script>
 <!-- Tutorial steps -->
 <div class="container">
 
   <p class="mt-3">Now that you've completed the necessary steps to integrate with the API, let's build out our transactional email API object
     known as a definition </p>
     <div>
-      <!-- Step 1 -->
+        <!-- Step 1 -->
+  <div class="card mt-3">
+      <div class="card-block">
+        <div class="card-header text-white" style="background-color:#00AA9E;">Step 3.1: Provide Necessary Info to Send an Email</div>
+        <div class="card-body">
+          <input type="text" required type="email" placeholder="Subscriber Key" id="subscriberKey" size='43'>
+          <input type="text" placeholder="Subscriber Email" id="subscriberEmail" size='43'>
+        </div>
+      </div>
+    </div>
+
+      <!-- Step 2 -->
       <div class="card mt-3">
         <div class="card-block">
-          <div class="card-header text-white" style="background-color: #00AA9E;">Step 2.3: Send a message</div>
+          <div class="card-header text-white" style="background-color: #00AA9E;">Step 3.2: Send a message</div>
           <div class="card-body">
             <h6 class="card-subtitle mb-3">The next step is to send an email to a recipient against a definition</h6>
       
@@ -37,7 +91,19 @@
 
             <p class="card-text">Again,in the Terminal window, run the following to get the status of that send.</p>
             <pre class="command-line" style="max-height: 30em" data-user="user" data-host="MacBook" data-src="/code-snippets/tutorials/curl-status-messageKey.sh"></pre>
-      
+            <button onclick='send()'>Personalize Commands</button>
+            <div class="card mt-3">
+              <div class="card-header"><small>PERSONALIZED COMMAND FOR SEND</small></div>
+              <pre style="max-height: 30em" class="m-2">
+                <code id="SendRunOutput" class="language-bash">Nothing yet. Click 'Personalize Commands' to see results.</code>
+              </pre>
+            </div>
+            <div class="card mt-3">
+              <div class="card-header"><small>PERSONALIZED COMMAND FOR CHECK</small></div>
+              <pre style="max-height: 30em" class="m-2">
+                <code id="CheckRunOutput" class="language-bash">Nothing yet. Click 'Personalize Commands' to see results.</code>
+              </pre>
+            </div>
             <p class="card-text">
               <span class="fa fa-star text-success"></span>&nbsp;Congrats! You have just sent an email and verified it's disposition using the NEW transactional messaging APIs!</p>
             <p class="card-text"><span class="fa-lightbulb-o"></span>To try other capabilities of the API, you can read the <a><href="https://sfmc-txn-msg-api-214.herokuapp.com/">swagger spec</href></a>.</p>
