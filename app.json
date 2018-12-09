@@ -2,7 +2,7 @@
   "name": "Salesforce Marketing Cloud Quick Start",
   "description": "Create a simple app for Marketing Cloud using APIs or your programming language of choice.",
   "repository": "https://github.com/sanagama/sfmc-quickstart",
-  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "logo": "https://cdn.jsdelivr.net/gh/heroku/node-js-getting-started@master/public/node.svg",
   "keywords": ["Salesforce", "Marketing Cloud"],
   "image": "heroku/nodejs"
 }
